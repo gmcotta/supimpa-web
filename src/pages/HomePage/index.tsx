@@ -7,7 +7,8 @@ import React, {
 } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
-import { spawn } from 'child_process';
+
+import { LocationModal } from './styles';
 
 Modal.setAppElement('#root');
 
@@ -128,7 +129,23 @@ const HomePage: React.FC = () => {
       {selectedCountryState && selectedCity && (
         <h2>{`${selectedCity}/${selectedCountryState}`}</h2>
       )}
-      <Modal isOpen={modalIsOpen} shouldCloseOnOverlayClick={false}>
+      <Modal
+        isOpen={modalIsOpen}
+        shouldCloseOnOverlayClick={false}
+        style={{
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+          },
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          },
+        }}
+      >
         <form onSubmit={handleSubmit}>
           <h1>Olá! Primeira vez por aqui?</h1>
           <h2>Diga para a gente de onde você é</h2>
