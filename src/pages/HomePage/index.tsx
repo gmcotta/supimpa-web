@@ -10,6 +10,9 @@ const HomePage: React.FC = () => {
       <h1>Home Page</h1>
       <Modal isOpen={modalIsOpen} shouldCloseOnOverlayClick={false}>
         <h1>Modal</h1>
+        <button type="button" onClick={() => setModalIsOpen(false)}>
+          Confirmar
+        </button>
       </Modal>
     </div>
   );
