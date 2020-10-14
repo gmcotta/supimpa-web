@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 
@@ -39,6 +45,18 @@ const HomePage: React.FC = () => {
       if (name === 'app-city') setSelectedCity(value);
     },
     [],
+  );
+
+  const handleSubmit = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault();
+      if (!selectedCountryState || !selectedCity) {
+        alert('Por favor, preencha os dados');
+      } else {
+        setModalIsOpen(false);
+      }
+    },
+    [selectedCountryState, selectedCity],
   );
 
   useEffect(() => {
@@ -103,24 +121,26 @@ const HomePage: React.FC = () => {
     <div>
       <h1>Home Page</h1>
       <Modal isOpen={modalIsOpen} shouldCloseOnOverlayClick={false}>
-        <h1>Modal</h1>
-        <select id="app-state" name="app-state" onChange={handleSelectChange}>
-          {countryStates?.map(state => (
-            <option key={state.id} value={state.abbreviation}>
-              {state.name}
-            </option>
-          ))}
-        </select>
-        <select id="app-city" name="app-city" onChange={handleSelectChange}>
-          {cities?.map(city => (
-            <option key={city.id} value={city.value}>
-              {city.name}
-            </option>
-          ))}
-        </select>
-        <button type="button" onClick={() => setModalIsOpen(false)}>
-          Confirmar
-        </button>
+        <form onSubmit={handleSubmit}>
+          <h1>Modal</h1>
+          <select id="app-state" name="app-state" onChange={handleSelectChange}>
+            {countryStates?.map(state => (
+              <option key={state.id} value={state.abbreviation}>
+                {state.name}
+              </option>
+            ))}
+          </select>
+          <select id="app-city" name="app-city" onChange={handleSelectChange}>
+            {cities?.map(city => (
+              <option key={city.id} value={city.value}>
+                {city.name}
+              </option>
+            ))}
+          </select>
+          <button type="submit" onClick={handleSubmit}>
+            Confirmar
+          </button>
+        </form>
       </Modal>
     </div>
   );
