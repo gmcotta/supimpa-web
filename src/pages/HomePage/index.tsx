@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
+import { spawn } from 'child_process';
 
 Modal.setAppElement('#root');
 
@@ -37,6 +38,7 @@ const HomePage: React.FC = () => {
   const [cities, setCities] = useState<AppCityProps[]>();
   const [selectedCountryState, setSelectedCountryState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
+  const [modalError, setModalError] = useState(false);
 
   const handleSelectChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
@@ -51,14 +53,16 @@ const HomePage: React.FC = () => {
     (event: FormEvent) => {
       event.preventDefault();
       if (!selectedCountryState || !selectedCity) {
-        alert('Por favor, preencha os dados');
+        setModalError(true);
       } else {
+        setModalError(false);
         setModalIsOpen(false);
       }
     },
     [selectedCountryState, selectedCity],
   );
 
+  // Get states from IBGE API
   useEffect(() => {
     axios
       .get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
@@ -86,6 +90,7 @@ const HomePage: React.FC = () => {
       });
   }, []);
 
+  // Get cities from IBGE API
   useEffect(() => {
     setCities([]);
     setSelectedCity('');
@@ -120,9 +125,13 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <h1>Home Page</h1>
+      {selectedCountryState && selectedCity && (
+        <h2>{`${selectedCity}/${selectedCountryState}`}</h2>
+      )}
       <Modal isOpen={modalIsOpen} shouldCloseOnOverlayClick={false}>
         <form onSubmit={handleSubmit}>
-          <h1>Modal</h1>
+          <h1>Olá! Primeira vez por aqui?</h1>
+          <h2>Diga para a gente de onde você é</h2>
           <select id="app-state" name="app-state" onChange={handleSelectChange}>
             {countryStates?.map(state => (
               <option key={state.id} value={state.abbreviation}>
@@ -137,6 +146,7 @@ const HomePage: React.FC = () => {
               </option>
             ))}
           </select>
+          {modalError && <span>Por favor, preencha os dados</span>}
           <button type="submit" onClick={handleSubmit}>
             Confirmar
           </button>
