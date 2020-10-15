@@ -1,4 +1,3 @@
-import { create } from 'domain';
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
@@ -26,5 +25,9 @@ export default createGlobalStyle`
   :root {
     --color-white: #fff;
     --color-black: #000;
+    --color-light: #fffcf7;
+    --color-background-light: #f9fafc;
+    --color-red-error: #fe012f;
+    --color-blue-light: #15c3d6;
   }
 `;

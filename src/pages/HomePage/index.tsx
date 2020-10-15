@@ -8,7 +8,13 @@ import React, {
 import Modal from 'react-modal';
 import axios from 'axios';
 
-import { LocationModal } from './styles';
+import {
+  ModalForm,
+  ModalHeading1,
+  ModalHeading2,
+  ModalFieldset,
+  ModalButton,
+} from './styles';
 
 Modal.setAppElement('#root');
 
@@ -140,34 +146,42 @@ const HomePage: React.FC = () => {
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
+            borderRadius: '8px',
+            backgroundColor: 'var(--color-background-light)',
           },
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.2)',
           },
         }}
       >
-        <form onSubmit={handleSubmit}>
-          <h1>Olá! Primeira vez por aqui?</h1>
-          <h2>Diga para a gente de onde você é</h2>
-          <select id="app-state" name="app-state" onChange={handleSelectChange}>
-            {countryStates?.map(state => (
-              <option key={state.id} value={state.abbreviation}>
-                {state.name}
-              </option>
-            ))}
-          </select>
-          <select id="app-city" name="app-city" onChange={handleSelectChange}>
-            {cities?.map(city => (
-              <option key={city.id} value={city.value}>
-                {city.name}
-              </option>
-            ))}
-          </select>
-          {modalError && <span>Por favor, preencha os dados</span>}
-          <button type="submit" onClick={handleSubmit}>
+        <ModalForm onSubmit={handleSubmit}>
+          <ModalHeading1>Olá! Primeira vez por aqui?</ModalHeading1>
+          <ModalHeading2>Diga para a gente: de onde você é?</ModalHeading2>
+          <ModalFieldset>
+            <select
+              id="app-state"
+              name="app-state"
+              onChange={handleSelectChange}
+            >
+              {countryStates?.map(state => (
+                <option key={state.id} value={state.abbreviation}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+            <select id="app-city" name="app-city" onChange={handleSelectChange}>
+              {cities?.map(city => (
+                <option key={city.id} value={city.value}>
+                  {city.name}
+                </option>
+              ))}
+            </select>
+            {modalError && <span>Por favor, preencha os dados</span>}
+          </ModalFieldset>
+          <ModalButton type="submit" onClick={handleSubmit}>
             Confirmar
-          </button>
-        </form>
+          </ModalButton>
+        </ModalForm>
       </Modal>
     </div>
   );
