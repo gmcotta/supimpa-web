@@ -66,6 +66,28 @@ export const Container = styled.div`
 export const ContentWrapper = styled.div`
   width: 100%;
   max-width: 100rem;
+  padding: 4rem 0;
   margin: 0 auto;
-  padding: 8rem 0;
+  color: var(--color-light);
+
+  & h1 {
+    font-size: 6.4rem;
+    text-align: center;
+    margin-top: 2.4rem;
+  }
+`;
+
+export const ContentHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  & div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & span {
+    font-size: 2.4rem;
+  }
 `;

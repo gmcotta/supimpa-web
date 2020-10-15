@@ -21,6 +21,7 @@ import {
   ModalButton,
   Container,
   ContentWrapper,
+  ContentHeader,
 } from './styles';
 
 Modal.setAppElement('#root');
@@ -138,7 +139,7 @@ const HomePage: React.FC = () => {
   // Get cities from IBGE API
   useEffect(() => {
     const localStorageLocation = localStorage.getItem('@HOME/Location');
-    if (localStorageLocation === null) {
+    if (localStorageLocation === null || modalIsOpen) {
       setCities([]);
       setSelectedCity('');
       axios
@@ -167,30 +168,37 @@ const HomePage: React.FC = () => {
           setCities(orderedCityList);
         });
     }
-  }, [selectedCountryState]);
+  }, [selectedCountryState, modalIsOpen]);
 
   return (
     <Container>
       <ContentWrapper>
-        <img src={logo} alt="Supimpa logo" />
+        <ContentHeader>
+          <img src={logo} alt="Supimpa logo" />
+          {!modalIsOpen && selectedCountryState && selectedCity && (
+            <div>
+              <span>{`${selectedCity} - ${selectedCountryState}`}</span>
+              <button type="button" onClick={() => setModalIsOpen(true)}>
+                Mudar localidade
+              </button>
+            </div>
+          )}
+        </ContentHeader>
         <h1>Leve felicidade para o mundo</h1>
-        <p>
-          Visite casas de repouso e alegre o dia daqueles que já fizeram muito
-          por nós
-        </p>
-        <p>
-          Visite casas de repouso e alegre o dia daqueles que já fizeram muito
-          por nós
-        </p>
         <Lottie
           options={lottieOptions}
           height={400}
-          width={600}
+          width={700}
           isClickToPauseDisabled
         />
-        {selectedCountryState && selectedCity && (
-          <h2>{`${selectedCity} - ${selectedCountryState}`}</h2>
-        )}
+        <p>
+          Visite casas de repouso e alegre o dia daqueles que já fizeram muito
+          por nós
+        </p>
+        <p>
+          Conheça os centros de comunidade para idosos e recomende para seus
+          parentes
+        </p>
         <button type="button">Acessar</button>
         <button type="button">Configurações</button>
       </ContentWrapper>
@@ -214,6 +222,7 @@ const HomePage: React.FC = () => {
         }}
       >
         <ModalForm onSubmit={handleSubmit}>
+          {}
           <ModalHeading1>Olá! Primeira vez por aqui?</ModalHeading1>
           <ModalHeading2>Diga para a gente: de onde você é?</ModalHeading2>
           <ModalFieldset>
@@ -229,11 +238,15 @@ const HomePage: React.FC = () => {
               ))}
             </select>
             <select id="app-city" name="app-city" onChange={handleSelectChange}>
-              {cities?.map(city => (
-                <option key={city.id} value={city.value}>
-                  {city.name}
-                </option>
-              ))}
+              {cities ? (
+                cities?.map(city => (
+                  <option key={city.id} value={city.value}>
+                    {city.name}
+                  </option>
+                ))
+              ) : (
+                <option value="">Selecione uma cidade</option>
+              )}
             </select>
             {modalError && <span>Por favor, preencha os dados</span>}
           </ModalFieldset>
