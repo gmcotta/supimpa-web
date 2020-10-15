@@ -3,12 +3,15 @@ import React, {
   FormEvent,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
+import Lottie from 'react-lottie';
 
 import logo from '../../assets/images/logo.svg';
+import homeAnimation from '../../assets/animations/homeAnimation.json';
 
 import {
   ModalForm,
@@ -44,6 +47,18 @@ type AppCityProps = {
 };
 
 const HomePage: React.FC = () => {
+  const lottieOptions = useMemo(
+    () => ({
+      loop: true,
+      autoplay: true,
+      animationData: homeAnimation,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice',
+      },
+    }),
+    [],
+  );
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [countryStates, setCountryStates] = useState<AppStateProps[]>();
   const [cities, setCities] = useState<AppCityProps[]>();
@@ -163,9 +178,21 @@ const HomePage: React.FC = () => {
           Visite casas de repouso e alegre o dia daqueles que já fizeram muito
           por nós
         </p>
+        <p>
+          Visite casas de repouso e alegre o dia daqueles que já fizeram muito
+          por nós
+        </p>
+        <Lottie
+          options={lottieOptions}
+          height={400}
+          width={600}
+          isClickToPauseDisabled
+        />
         {selectedCountryState && selectedCity && (
-          <h2>{`${selectedCity}/${selectedCountryState}`}</h2>
+          <h2>{`${selectedCity} - ${selectedCountryState}`}</h2>
         )}
+        <button type="button">Acessar</button>
+        <button type="button">Configurações</button>
       </ContentWrapper>
       <Modal
         isOpen={modalIsOpen}
