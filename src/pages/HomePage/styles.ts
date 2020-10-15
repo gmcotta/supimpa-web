@@ -52,3 +52,20 @@ export const ModalButton = styled.button`
     background-color: ${darken(0.05, '#15c3d6')};
   }
 `;
+
+export const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(
+    330deg,
+    var(--color-gradient-blue-dark) 0%,
+    var(--color-gradient-blue-light) 100%
+  );
+`;
+
+export const ContentWrapper = styled.div`
+  width: 100%;
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: 8rem 0;
+`;

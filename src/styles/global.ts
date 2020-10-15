@@ -29,5 +29,7 @@ export default createGlobalStyle`
     --color-background-light: #f9fafc;
     --color-red-error: #fe012f;
     --color-blue-light: #15c3d6;
+    --color-gradient-blue-dark: #29b6d1;
+    --color-gradient-blue-light: #00c7c7;
   }
 `;

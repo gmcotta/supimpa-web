@@ -8,12 +8,16 @@ import React, {
 import Modal from 'react-modal';
 import axios from 'axios';
 
+import logo from '../../assets/images/logo.svg';
+
 import {
   ModalForm,
   ModalHeading1,
   ModalHeading2,
   ModalFieldset,
   ModalButton,
+  Container,
+  ContentWrapper,
 } from './styles';
 
 Modal.setAppElement('#root');
@@ -79,12 +83,10 @@ const HomePage: React.FC = () => {
   // Check if location is already set
   useEffect(() => {
     const localStorageLocation = localStorage.getItem('@HOME/Location');
-    console.log(localStorageLocation);
     if (localStorageLocation === null) {
       setModalIsOpen(true);
     } else {
       const { state, city } = JSON.parse(localStorageLocation);
-      console.log(state, city);
       setSelectedCountryState(state);
       setSelectedCity(city);
     }
@@ -136,7 +138,6 @@ const HomePage: React.FC = () => {
               value: item.nome,
             }),
           );
-          console.log(cityList);
           let orderedCityList = cityList.sort(
             (a: AppCityProps, b: AppCityProps) => {
               if (a.name > b.name) return 1;
@@ -154,11 +155,18 @@ const HomePage: React.FC = () => {
   }, [selectedCountryState]);
 
   return (
-    <div>
-      <h1>Home Page</h1>
-      {selectedCountryState && selectedCity && (
-        <h2>{`${selectedCity}/${selectedCountryState}`}</h2>
-      )}
+    <Container>
+      <ContentWrapper>
+        <img src={logo} alt="Supimpa logo" />
+        <h1>Leve felicidade para o mundo</h1>
+        <p>
+          Visite casas de repouso e alegre o dia daqueles que já fizeram muito
+          por nós
+        </p>
+        {selectedCountryState && selectedCity && (
+          <h2>{`${selectedCity}/${selectedCountryState}`}</h2>
+        )}
+      </ContentWrapper>
       <Modal
         isOpen={modalIsOpen}
         shouldCloseOnOverlayClick={false}
@@ -207,7 +215,7 @@ const HomePage: React.FC = () => {
           </ModalButton>
         </ModalForm>
       </Modal>
-    </div>
+    </Container>
   );
 };
 
