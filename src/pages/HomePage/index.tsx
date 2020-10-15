@@ -184,23 +184,30 @@ const HomePage: React.FC = () => {
             </div>
           )}
         </ContentHeader>
-        <h1>Leve felicidade para o mundo</h1>
-        <Lottie
-          options={lottieOptions}
-          height={400}
-          width={700}
-          isClickToPauseDisabled
-        />
-        <p>
-          Visite casas de repouso e alegre o dia daqueles que já fizeram muito
-          por nós
-        </p>
-        <p>
-          Conheça os centros de comunidade para idosos e recomende para seus
-          parentes
-        </p>
-        <button type="button">Acessar</button>
-        <button type="button">Configurações</button>
+        <main>
+          <section>
+            <h1>Leve felicidade para o mundo</h1>
+            <div>
+              <p>
+                Visite casas de repouso e alegre o dia daqueles que já fizeram
+                muito por nós
+              </p>
+              <p>
+                Conheça os centros de comunidade para idosos e recomende para
+                seus parentes
+              </p>
+            </div>
+          </section>
+          <section>
+            <Lottie
+              options={lottieOptions}
+              height={400}
+              width={700}
+              isClickToPauseDisabled
+            />
+            <button type="button">Acessar</button>
+          </section>
+        </main>
       </ContentWrapper>
       <Modal
         isOpen={modalIsOpen}

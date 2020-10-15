@@ -28,8 +28,11 @@ export default createGlobalStyle`
     --color-light: #fffcf7;
     --color-background-light: #f9fafc;
     --color-red-error: #fe012f;
+    --color-blue-lightest: #95feff;
     --color-blue-light: #15c3d6;
     --color-gradient-blue-dark: #29b6d1;
     --color-gradient-blue-light: #00c7c7;
+    --color-yellow: #ffd666;
+    --color-brown: #8d734b;
   }
 `;
