@@ -76,38 +76,7 @@ export const ContentWrapper = styled.div`
     grid-template-columns: 40% 60%;
     column-gap: 1.6rem;
     height: calc(100% - 7.2rem);
-  }
-
-  & section {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    & button {
-      height: 5.6rem;
-      border: none;
-      border-radius: 8px;
-      text-transform: uppercase;
-      font-size: 2rem;
-      background-color: var(--color-yellow);
-      color: var(--color-brown);
-      transition: background-color 0.2s;
-
-      &:hover {
-        cursor: pointer;
-        background-color: ${darken(0.05, '#ffd666')};
-      }
-    }
-  }
-
-  & h1 {
-    font-size: 6rem;
-    margin: 2.4rem 0 6.4rem;
-  }
-
-  & p {
-    font-size: 2.4rem;
-    margin-top: 1.6rem;
+    position: relative;
   }
 `;
 
@@ -137,6 +106,60 @@ export const ContentHeader = styled.header`
     &:hover {
       cursor: pointer;
       color: ${darken(0.05, '#fffcf7')};
+    }
+  }
+`;
+
+export const LeftContent = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & h1 {
+    font-size: 6rem;
+    margin: 2.4rem 0 6.4rem;
+  }
+
+  & p {
+    font-size: 2.4rem;
+    margin-top: 1.6rem;
+  }
+`;
+
+export const RightContent = styled.section`
+  & div {
+    position: absolute;
+    right: -7.2rem;
+    top: 7.2rem;
+  }
+  & a {
+    height: 5.6rem;
+    border: none;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 2rem;
+    text-decoration: none;
+    background-color: var(--color-yellow);
+    color: var(--color-brown);
+    padding: 0.8rem 1.6rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    transition: background-color 0.2s;
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    &:hover {
+      cursor: pointer;
+      background-color: ${darken(0.05, '#ffd666')};
+      font-weight: 500;
+    }
+
+    & svg {
+      margin-left: 0.8rem;
     }
   }
 `;

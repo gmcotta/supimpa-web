@@ -9,6 +9,8 @@ import React, {
 import Modal from 'react-modal';
 import axios from 'axios';
 import Lottie from 'react-lottie';
+import { FiArrowRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.svg';
 import homeAnimation from '../../assets/animations/homeAnimation.json';
@@ -22,6 +24,8 @@ import {
   Container,
   ContentWrapper,
   ContentHeader,
+  LeftContent,
+  RightContent,
 } from './styles';
 
 Modal.setAppElement('#root');
@@ -185,7 +189,7 @@ const HomePage: React.FC = () => {
           )}
         </ContentHeader>
         <main>
-          <section>
+          <LeftContent>
             <h1>Leve felicidade para o mundo</h1>
             <div>
               <p>
@@ -197,16 +201,20 @@ const HomePage: React.FC = () => {
                 seus parentes
               </p>
             </div>
-          </section>
-          <section>
+          </LeftContent>
+          <RightContent>
             <Lottie
               options={lottieOptions}
-              height={400}
-              width={700}
+              height={480}
+              width={800}
               isClickToPauseDisabled
+              ariaLabel="home page animation"
             />
-            <button type="button">Acessar</button>
-          </section>
+            <Link to="/">
+              Acessar
+              <FiArrowRight />
+            </Link>
+          </RightContent>
         </main>
       </ContentWrapper>
       <Modal
