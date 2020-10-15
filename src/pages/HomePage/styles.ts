@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const ModalForm = styled.form`
   text-align: center;
@@ -21,9 +22,10 @@ export const ModalFieldset = styled.fieldset`
 
   & select {
     margin-bottom: 1.6rem;
-    height: 4rem;
+    height: 5.6rem;
     padding: 0.8rem;
     font-size: 1.6rem;
+    border-radius: 8px;
   }
 
   & span {
@@ -36,11 +38,17 @@ export const ModalFieldset = styled.fieldset`
 
 export const ModalButton = styled.button`
   width: 100%;
-  height: 4rem;
+  height: 5.6rem;
   border: none;
   border-radius: 8px;
   text-transform: uppercase;
   font-size: 2rem;
   background-color: var(--color-blue-light);
   color: var(--color-light);
+  transition: background-color 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${darken(0.05, '#15c3d6')};
+  }
 `;

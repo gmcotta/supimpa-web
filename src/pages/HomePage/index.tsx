@@ -40,7 +40,7 @@ type AppCityProps = {
 };
 
 const HomePage: React.FC = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [countryStates, setCountryStates] = useState<AppStateProps[]>();
   const [cities, setCities] = useState<AppCityProps[]>();
   const [selectedCountryState, setSelectedCountryState] = useState('');
@@ -64,10 +64,31 @@ const HomePage: React.FC = () => {
       } else {
         setModalError(false);
         setModalIsOpen(false);
+        localStorage.setItem(
+          '@HOME/Location',
+          JSON.stringify({ state: selectedCountryState, city: selectedCity }),
+        );
+        console.log(
+          JSON.stringify({ state: selectedCountryState, city: selectedCity }),
+        );
       }
     },
     [selectedCountryState, selectedCity],
   );
+
+  // Check if location is already set
+  useEffect(() => {
+    const localStorageLocation = localStorage.getItem('@HOME/Location');
+    console.log(localStorageLocation);
+    if (localStorageLocation === null) {
+      setModalIsOpen(true);
+    } else {
+      const { state, city } = JSON.parse(localStorageLocation);
+      console.log(state, city);
+      setSelectedCountryState(state);
+      setSelectedCity(city);
+    }
+  }, []);
 
   // Get states from IBGE API
   useEffect(() => {
@@ -99,34 +120,37 @@ const HomePage: React.FC = () => {
 
   // Get cities from IBGE API
   useEffect(() => {
-    setCities([]);
-    setSelectedCity('');
-    axios
-      .get(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedCountryState}/municipios`,
-      )
-      .then(response => {
-        const cityList = response.data.map(
-          (item: IBGECityResponse, index: number) => ({
-            id: index + 1,
-            name: item.nome,
-            value: item.nome,
-          }),
-        );
-        console.log(cityList);
-        let orderedCityList = cityList.sort(
-          (a: AppCityProps, b: AppCityProps) => {
-            if (a.name > b.name) return 1;
-            if (a.name < b.name) return -1;
-            return 0;
-          },
-        );
-        orderedCityList = [
-          { id: 0, name: 'Selecione uma cidade', value: '' },
-          ...orderedCityList,
-        ];
-        setCities(orderedCityList);
-      });
+    const localStorageLocation = localStorage.getItem('@HOME/Location');
+    if (localStorageLocation === null) {
+      setCities([]);
+      setSelectedCity('');
+      axios
+        .get(
+          `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedCountryState}/municipios`,
+        )
+        .then(response => {
+          const cityList = response.data.map(
+            (item: IBGECityResponse, index: number) => ({
+              id: index + 1,
+              name: item.nome,
+              value: item.nome,
+            }),
+          );
+          console.log(cityList);
+          let orderedCityList = cityList.sort(
+            (a: AppCityProps, b: AppCityProps) => {
+              if (a.name > b.name) return 1;
+              if (a.name < b.name) return -1;
+              return 0;
+            },
+          );
+          orderedCityList = [
+            { id: 0, name: 'Selecione uma cidade', value: '' },
+            ...orderedCityList,
+          ];
+          setCities(orderedCityList);
+        });
+    }
   }, [selectedCountryState]);
 
   return (
