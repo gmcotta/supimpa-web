@@ -197,7 +197,7 @@ const HomePage: React.FC = () => {
                 muito por nós
               </p>
               <p>
-                Conheça os centros de comunidade para idosos e recomende para
+                Conheça os centros de convivência para idosos e recomende para
                 seus parentes
               </p>
             </div>
