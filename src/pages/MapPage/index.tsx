@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import grandmaIcon from '../../assets/images/grandma.svg';
 import retirementHome from '../../assets/images/retirement-home.svg';
 import seniorCenter from '../../assets/images/senior-center.svg';
+
+import { Container, Aside, AsideText, MapLegend, MapContainer } from './styles';
 
 const MapPage: React.FC = () => {
   const history = useHistory();
@@ -23,13 +25,17 @@ const MapPage: React.FC = () => {
   }, [history]);
 
   return (
-    <div>
-      <aside>
-        <img src={grandmaIcon} alt="Vó Supimpa" />
-        <h1>Escolha uma instituição no mapa</h1>
-        <p>Muitos idosos precisam da sua ajuda!</p>
-        <h2>Legenda</h2>
-        <div>
+    <Container>
+      <Aside>
+        <header>
+          <img src={grandmaIcon} alt="Vó Supimpa" />
+        </header>
+        <AsideText>
+          <h1>Escolha uma instituição no mapa</h1>
+          <p>Muitos idosos precisam da sua ajuda!</p>
+        </AsideText>
+        <MapLegend>
+          <h2>Legenda</h2>
           <div>
             <img src={retirementHome} alt="Casa de repouso" />
             <span>Casa de repouso</span>
@@ -38,11 +44,16 @@ const MapPage: React.FC = () => {
             <img src={seniorCenter} alt="Centro de convivência" />
             <span>Centro de convivência</span>
           </div>
-        </div>
-        <strong>{`${selectedCity}-${selectedCountryState}`}</strong>
-      </aside>
-      <main>Mapa</main>
-    </div>
+        </MapLegend>
+        <footer>
+          <strong>{`${selectedCity}-${selectedCountryState}`}</strong>
+        </footer>
+      </Aside>
+      <MapContainer>
+        Mapa
+        <Link to="/">Adicionar</Link>
+      </MapContainer>
+    </Container>
   );
 };
 
