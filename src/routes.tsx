@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import MapPage from './pages/MapPage';
+import InstitutionDetails from './pages/InstitutionDetails';
 
 const Routes: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ const Routes: React.FC = () => {
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/map" exact component={MapPage} />
+        <Route path="/institution/:id" exact component={InstitutionDetails} />
       </Switch>
     </BrowserRouter>
   );
