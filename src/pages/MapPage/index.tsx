@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
+import { Map, TileLayer } from 'react-leaflet';
 
 import grandmaIcon from '../../assets/images/grandma.svg';
 import retirementHome from '../../assets/images/retirement-home.svg';
@@ -29,7 +30,9 @@ const MapPage: React.FC = () => {
     <Container>
       <Aside>
         <header>
-          <img src={grandmaIcon} alt="Vó Supimpa" />
+          <Link to="/">
+            <img src={grandmaIcon} alt="Vó Supimpa" />
+          </Link>
         </header>
         <AsideText>
           <h1>Escolha uma instituição no mapa</h1>
@@ -51,11 +54,19 @@ const MapPage: React.FC = () => {
         </footer>
       </Aside>
       <MapContainer>
-        Mapa
-        <Link to="/">
-          <MdAdd size={40} />
-        </Link>
+        <Map
+          center={[-23.4439484, -46.5258909]}
+          zoom={14}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <TileLayer
+            url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+          />
+        </Map>
       </MapContainer>
+      <Link to="/">
+        <MdAdd size={40} />
+      </Link>
     </Container>
   );
 };

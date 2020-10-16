@@ -6,6 +6,32 @@ export const Container = styled.div`
   background-color: var(--color-background-light);
   display: grid;
   grid-template-columns: 30% 70%;
+  position: relative;
+
+  & > a {
+    position: absolute;
+    bottom: 4rem;
+    right: 4rem;
+    text-decoration: none;
+    width: 6.4rem;
+    height: 6.4rem;
+    border-radius: 0.8rem;
+    background-color: var(--color-blue-light);
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+
+    &:hover {
+      cursor: pointer;
+      background: var(--color-blue-lightest);
+    }
+
+    & svg {
+      color: var(--color-light);
+    }
+  }
 `;
 
 export const Aside = styled.aside`
@@ -70,29 +96,7 @@ export const MapLegend = styled.div`
 `;
 
 export const MapContainer = styled.main`
-  position: relative;
-
-  & a {
-    position: absolute;
-    bottom: 4rem;
-    right: 4rem;
-    text-decoration: none;
-    width: 6.4rem;
-    height: 6.4rem;
-    border-radius: 0.8rem;
-    background-color: var(--color-blue-light);
-    transition: background-color 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:hover {
-      cursor: pointer;
-      background: var(--color-blue-lightest);
-    }
-
-    & svg {
-      color: var(--color-light);
-    }
+  .leaflet-container {
+    z-index: 5;
   }
 `;
