@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 import { Map, TileLayer } from 'react-leaflet';
+import axios from 'axios';
 
 import grandmaIcon from '../../assets/images/grandma.svg';
 import retirementHome from '../../assets/images/retirement-home.svg';
@@ -9,11 +10,23 @@ import seniorCenter from '../../assets/images/senior-center.svg';
 
 import { Container, Aside, AsideText, MapLegend, MapContainer } from './styles';
 
+type OpenCageDataResponse = {
+  data: {
+    results: Array<{
+      geometry: {
+        lat: number;
+        lng: number;
+      };
+    }>;
+  };
+};
+
 const MapPage: React.FC = () => {
   const history = useHistory();
 
   const [selectedCountryState, setSelectedCountryState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
+  const [cityLocation, setCityLocation] = useState<[number, number]>([0, 0]);
 
   useEffect(() => {
     const localStorageLocation = localStorage.getItem('@HOME/Location');
@@ -23,6 +36,14 @@ const MapPage: React.FC = () => {
       const { city, state } = JSON.parse(localStorageLocation);
       setSelectedCountryState(state);
       setSelectedCity(city);
+      axios
+        .get(
+          `https://api.opencagedata.com/geocode/v1/json?key=${process.env.REACT_APP_OPENCAGEDATA_TOKEN}&q=${city},%20${state}&pretty=1&limit=1`,
+        )
+        .then((response: OpenCageDataResponse) => {
+          const { lat, lng } = response.data.results[0].geometry;
+          setCityLocation([lat, lng]);
+        });
     }
   }, [history]);
 
@@ -55,7 +76,7 @@ const MapPage: React.FC = () => {
       </Aside>
       <MapContainer>
         <Map
-          center={[-23.4439484, -46.5258909]}
+          center={cityLocation}
           zoom={14}
           style={{ width: '100%', height: '100%' }}
         >
