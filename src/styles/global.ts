@@ -30,6 +30,7 @@ export default createGlobalStyle`
     --color-red-error: #fe012f;
     --color-blue-lightest: #95feff;
     --color-blue-light: #15c3d6;
+    --color-blue-dark: #0089a5;
     --color-gradient-blue-dark: #29b6d1;
     --color-gradient-blue-light: #00c7c7;
     --color-yellow: #ffd666;

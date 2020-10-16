@@ -25,7 +25,7 @@ export const Container = styled.div`
 
     &:hover {
       cursor: pointer;
-      background: var(--color-blue-lightest);
+      background: var(--color-blue-dark);
     }
 
     & svg {
@@ -98,5 +98,47 @@ export const MapLegend = styled.div`
 export const MapContainer = styled.main`
   .leaflet-container {
     z-index: 5;
+  }
+
+  .map-popup {
+    & .leaflet-popup-content-wrapper {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      box-shadow: none;
+    }
+
+    & .leaflet-popup-content {
+      color: var(--color-blue-dark);
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin: 0.8rem 1.2rem;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    & .leaflet-popup-content a {
+      width: 4rem;
+      height: 4rem;
+      background-color: var(--color-blue-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: var(--color-blue-dark);
+      }
+    }
+
+    & .leaflet-popup-content a svg {
+      color: var(--color-light);
+    }
+
+    & .leaflet-popup-tip-container {
+      display: none;
+    }
   }
 `;

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
+import { FiArrowRight } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import axios from 'axios';
 
 import api from '../../services/api';
+import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
 
 import grandmaIcon from '../../assets/images/grandma.svg';
 import retirementHome from '../../assets/images/retirement-home.svg';
@@ -51,6 +53,7 @@ const MapPage: React.FC = () => {
       const { city, state } = JSON.parse(localStorageLocation);
       setSelectedCountryState(state);
       setSelectedCity(city);
+
       axios
         .get(
           `https://api.opencagedata.com/geocode/v1/json?key=${process.env.REACT_APP_OPENCAGEDATA_TOKEN}&q=${city},%20${state}&pretty=1&limit=1`,
@@ -106,8 +109,23 @@ const MapPage: React.FC = () => {
             <Marker
               key={institution.id}
               position={[institution.latitude, institution.longitude]}
+              icon={
+                institution.retirement_or_center === 'retirement'
+                  ? retirementHomeIcon
+                  : seniorCenterIcon
+              }
             >
-              <Popup>{institution.name}</Popup>
+              <Popup
+                closeButton={false}
+                minWidth={300}
+                maxWidth={300}
+                className="map-popup"
+              >
+                {institution.name}
+                <Link to={`/institutions/${institution.id}`}>
+                  <FiArrowRight />
+                </Link>
+              </Popup>
             </Marker>
           ))}
         </Map>
