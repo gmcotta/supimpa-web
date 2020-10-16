@@ -41,13 +41,13 @@ type IBGECityResponse = {
 
 type AppStateProps = {
   id: number;
-  name: string;
-  abbreviation: string;
+  label: string;
+  value: string;
 };
 
 type AppCityProps = {
   id: number;
-  name: string;
+  label: string;
   value: string;
 };
 
@@ -120,19 +120,19 @@ const HomePage: React.FC = () => {
         const stateList = response.data.map(
           (item: IBGEStateResponse, index: number) => ({
             id: index + 1,
-            name: item.nome,
-            abbreviation: item.sigla,
+            label: item.nome,
+            value: item.sigla,
           }),
         );
         let orderedStateList = stateList.sort(
           (a: AppStateProps, b: AppStateProps) => {
-            if (a.abbreviation > b.abbreviation) return 1;
-            if (a.abbreviation < b.abbreviation) return -1;
+            if (a.value > b.value) return 1;
+            if (a.value < b.value) return -1;
             return 0;
           },
         );
         orderedStateList = [
-          { id: 0, name: 'Selecione um estado', abbreviation: '' },
+          { id: 0, label: 'Selecione um estado', value: '' },
           ...orderedStateList,
         ];
 
@@ -154,19 +154,19 @@ const HomePage: React.FC = () => {
           const cityList = response.data.map(
             (item: IBGECityResponse, index: number) => ({
               id: index + 1,
-              name: item.nome,
+              label: item.nome,
               value: item.nome,
             }),
           );
           let orderedCityList = cityList.sort(
             (a: AppCityProps, b: AppCityProps) => {
-              if (a.name > b.name) return 1;
-              if (a.name < b.name) return -1;
+              if (a.label > b.label) return 1;
+              if (a.label < b.label) return -1;
               return 0;
             },
           );
           orderedCityList = [
-            { id: 0, name: 'Selecione uma cidade', value: '' },
+            { id: 0, label: 'Selecione uma cidade', value: '' },
             ...orderedCityList,
           ];
           setCities(orderedCityList);
@@ -247,8 +247,8 @@ const HomePage: React.FC = () => {
               onChange={handleSelectChange}
             >
               {countryStates?.map(state => (
-                <option key={state.id} value={state.abbreviation}>
-                  {state.name}
+                <option key={state.id} value={state.value}>
+                  {state.label}
                 </option>
               ))}
             </select>
@@ -256,7 +256,7 @@ const HomePage: React.FC = () => {
               {cities ? (
                 cities?.map(city => (
                   <option key={city.id} value={city.value}>
-                    {city.name}
+                    {city.label}
                   </option>
                 ))
               ) : (

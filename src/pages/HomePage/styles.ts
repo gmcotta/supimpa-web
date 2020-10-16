@@ -26,6 +26,12 @@ export const ModalFieldset = styled.fieldset`
     padding: 0.8rem;
     font-size: 1.6rem;
     border-radius: 8px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   & span {
