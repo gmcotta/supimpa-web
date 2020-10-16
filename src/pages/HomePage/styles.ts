@@ -154,7 +154,8 @@ export const RightContent = styled.section`
 
     &:hover {
       cursor: pointer;
-      background-color: ${darken(0.05, '#ffd666')};
+      background-color: var(--color-blue-lightest);
+      color: var(--color-blue-light);
       font-weight: 500;
     }
 

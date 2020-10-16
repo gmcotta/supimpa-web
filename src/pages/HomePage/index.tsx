@@ -210,7 +210,7 @@ const HomePage: React.FC = () => {
               isClickToPauseDisabled
               ariaLabel="home page animation"
             />
-            <Link to="/">
+            <Link to="/map">
               Acessar
               <FiArrowRight />
             </Link>
