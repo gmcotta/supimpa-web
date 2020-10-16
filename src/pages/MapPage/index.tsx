@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
-import { Map, TileLayer } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import axios from 'axios';
+
+import api from '../../services/api';
 
 import grandmaIcon from '../../assets/images/grandma.svg';
 import retirementHome from '../../assets/images/retirement-home.svg';
@@ -21,12 +23,25 @@ type OpenCageDataResponse = {
   };
 };
 
+type BackendDataResponse = {
+  data: Array<InstitutionProps>;
+};
+
+type InstitutionProps = {
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  retirement_or_center: string;
+};
+
 const MapPage: React.FC = () => {
   const history = useHistory();
 
   const [selectedCountryState, setSelectedCountryState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [cityLocation, setCityLocation] = useState<[number, number]>([0, 0]);
+  const [institutions, setInstitutions] = useState<InstitutionProps[]>();
 
   useEffect(() => {
     const localStorageLocation = localStorage.getItem('@HOME/Location');
@@ -44,6 +59,10 @@ const MapPage: React.FC = () => {
           const { lat, lng } = response.data.results[0].geometry;
           setCityLocation([lat, lng]);
         });
+
+      api.get('/institutions').then((response: BackendDataResponse) => {
+        setInstitutions(response.data);
+      });
     }
   }, [history]);
 
@@ -83,6 +102,14 @@ const MapPage: React.FC = () => {
           <TileLayer
             url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
           />
+          {institutions?.map(institution => (
+            <Marker
+              key={institution.id}
+              position={[institution.latitude, institution.longitude]}
+            >
+              <Popup>{institution.name}</Popup>
+            </Marker>
+          ))}
         </Map>
       </MapContainer>
       <Link to="/">
