@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { MdAdd } from 'react-icons/md';
 
 import grandmaIcon from '../../assets/images/grandma.svg';
 import retirementHome from '../../assets/images/retirement-home.svg';
@@ -51,7 +52,9 @@ const MapPage: React.FC = () => {
       </Aside>
       <MapContainer>
         Mapa
-        <Link to="/">Adicionar</Link>
+        <Link to="/">
+          <MdAdd size={40} />
+        </Link>
       </MapContainer>
     </Container>
   );

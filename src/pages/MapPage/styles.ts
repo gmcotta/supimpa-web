@@ -77,9 +77,22 @@ export const MapContainer = styled.main`
     bottom: 4rem;
     right: 4rem;
     text-decoration: none;
+    width: 6.4rem;
+    height: 6.4rem;
+    border-radius: 0.8rem;
+    background-color: var(--color-blue-light);
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
       cursor: pointer;
+      background: var(--color-blue-lightest);
+    }
+
+    & svg {
+      color: var(--color-light);
     }
   }
 `;
