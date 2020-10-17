@@ -40,6 +40,10 @@ export const Container = styled.div<InputProps>`
     margin-top: 0.8rem;
     padding-left: 1.6rem;
 
+    &::placeholder {
+      color: var(--color-input-border);
+    }
+
     &:disabled {
       background-color: var(--color-gray-light);
       border-color: var(--color-gray);

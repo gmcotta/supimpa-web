@@ -15,7 +15,7 @@ import Textarea from '../../components/Textarea';
 
 import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
 
-import { Form, MapSection } from './styles';
+import { Form, MapSection, RadioButtonSection, Checkbox } from './styles';
 
 const CreateInstitution: React.FC = () => {
   const initialValues = useMemo(
@@ -25,7 +25,7 @@ const CreateInstitution: React.FC = () => {
       longitude: 0,
       about: '',
       phone: '',
-      retirement_or_center: '',
+      retirement_or_center: 'retirement',
       instructions: '',
       working_hours: '',
       open_on_weekends: true,
@@ -144,7 +144,11 @@ const CreateInstitution: React.FC = () => {
                   url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
                 />
                 <Marker
-                  icon={retirementHomeIcon}
+                  icon={
+                    values.retirement_or_center === 'retirement'
+                      ? retirementHomeIcon
+                      : seniorCenterIcon
+                  }
                   position={[values.latitude, values.longitude]}
                 />
               </Map>
@@ -160,30 +164,46 @@ const CreateInstitution: React.FC = () => {
             onBlur={handleBlur}
             hasError={touched.name && !!errors.name}
             errorMessage={errors.name}
-            optional="Teste opcional"
           />
-          <div>
+          <RadioButtonSection>
+            <span>Tipo de instituição</span>
             <div>
-              <span>Tipo de instituição</span>
-              <input
-                type="radio"
-                name="retirement_or_center"
-                id="retirement"
-                value="retirement"
-                defaultChecked
-              />
-              <label htmlFor="retirement">Casa de repouso</label>
+              <label htmlFor="retirement">
+                <input
+                  type="radio"
+                  name="retirement_or_center"
+                  id="retirement"
+                  value="retirement"
+                  onChange={handleChange}
+                />
+                <span
+                  className={
+                    values.retirement_or_center === 'retirement'
+                      ? 'selected'
+                      : ''
+                  }
+                />
+                Casa de repouso
+              </label>
             </div>
             <div>
-              <input
-                type="radio"
-                name="retirement_or_center"
-                id="center"
-                value="center"
-              />
-              <label htmlFor="center">Centro de convivência</label>
+              <label htmlFor="center">
+                <input
+                  type="radio"
+                  name="retirement_or_center"
+                  id="center"
+                  value="center"
+                  onChange={handleChange}
+                />
+                <span
+                  className={
+                    values.retirement_or_center === 'center' ? 'selected' : ''
+                  }
+                />
+                Centro de convivência
+              </label>
             </div>
-          </div>
+          </RadioButtonSection>
           <Textarea
             id="about"
             label="Sobre"
@@ -209,40 +229,44 @@ const CreateInstitution: React.FC = () => {
             errorMessage={errors.phone}
             placeholder="__ _____-____"
           />
-          <label htmlFor="phone">
-            Número de Whatsapp
-            <input
-              type="text"
-              id="phone"
-              name="phone"
-              placeholder="__ _____-____"
-            />
-          </label>
           <div>Fotos</div>
         </fieldset>
         <fieldset>
           <legend>Visitação</legend>
-          <label htmlFor="instructions">
-            Instruções
-            <textarea id="instructions" name="instructions" />
-          </label>
-          <label htmlFor="working_hours">
-            Número de Whatsapp
-            <input
-              type="text"
-              id="working_hours"
-              name="working_hours"
-              placeholder="Exemplo: Das 8h às 17h"
-            />
-          </label>
-          <label htmlFor="open_on_weekends">
-            Atende fim de semana?
-            <input
-              type="checkbox"
-              name="open_on_weekends"
-              id="open_on_weekends"
-            />
-          </label>
+          <Textarea
+            id="instructions"
+            label="Instruções"
+            name="instructions"
+            value={values.instructions}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            hasError={touched.instructions && !!errors.instructions}
+            errorMessage={errors.instructions}
+          />
+          <Input
+            id="working_hours"
+            label="Horário de funcionamento"
+            name="working_hours"
+            value={values.working_hours}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            hasError={touched.working_hours && !!errors.working_hours}
+            errorMessage={errors.working_hours}
+            optional="Ex.: Das 8h às 17h"
+          />
+          <Checkbox>
+            <label htmlFor="open_on_weekends">
+              Atende fim de semana?
+              <span className={values.open_on_weekends ? 'checked' : ''} />
+              <input
+                type="checkbox"
+                name="open_on_weekends"
+                id="open_on_weekends"
+                onChange={handleChange}
+                defaultChecked
+              />
+            </label>
+          </Checkbox>
         </fieldset>
         <button type="submit">Confirmar</button>
       </Form>
