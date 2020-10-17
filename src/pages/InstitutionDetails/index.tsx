@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FiClock, FiInfo } from 'react-icons/fi';
 
+import Sidebar from '../../components/Sidebar';
+
 import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
 import api from '../../services/api';
 
@@ -66,6 +68,7 @@ const InstitutionDetails: React.FC = () => {
 
   return (
     <Container>
+      <Sidebar />
       <InstitutionCard>
         <ImagesSection>
           <img
@@ -114,15 +117,13 @@ const InstitutionDetails: React.FC = () => {
                 />
               </Map>
             </div>
-            <footer>
-              <a
-                href={`https://maps.google.com/?q=${institution.latitude},${institution.longitude}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Ver rotas no Google Maps
-              </a>
-            </footer>
+            <a
+              href={`https://maps.google.com/?q=${institution.latitude},${institution.longitude}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ver rotas no Google Maps
+            </a>
           </MapSection>
           <h2>Instruções para visita</h2>
           <p>{institution.instructions}</p>

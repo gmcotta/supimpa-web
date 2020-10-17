@@ -1,3 +1,4 @@
+import { darken } from 'polished';
 import styled, { css } from 'styled-components';
 
 type WorkOnWeekendCardProps = {
@@ -86,17 +87,19 @@ export const MapSection = styled.section`
   overflow: hidden;
   margin: 6.4rem 0;
 
-  & footer {
+  & > a {
     height: 5.6rem;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--color-blue-lightest-2);
+    text-decoration: none;
+    color: var(--color-title-blue);
+    font-size: 2rem;
+    transition: background-color 0.2s;
 
-    & a {
-      text-decoration: none;
-      color: var(--color-title-blue);
-      font-size: 2rem;
+    &:hover {
+      background-color: ${darken(0.05, '#e6f7fb')};
     }
   }
 `;
@@ -189,6 +192,11 @@ export const WhatsappButton = styled.a`
   text-decoration: none;
   background-color: var(--color-whatsapp);
   color: var(--color-light);
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: ${darken(0.05, '#37c77f')};
+  }
 
   & svg {
     margin-right: 1.6rem;
