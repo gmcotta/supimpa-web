@@ -24,6 +24,7 @@ const CreateInstitution: React.FC = () => {
       latitude: 0,
       longitude: 0,
       about: '',
+      phone: '',
       retirement_or_center: '',
       instructions: '',
       working_hours: '',
@@ -38,6 +39,7 @@ const CreateInstitution: React.FC = () => {
       latitude: '',
       longitude: '',
       about: '',
+      phone: '',
       retirement_or_center: '',
       instructions: '',
       working_hours: '',
@@ -52,6 +54,7 @@ const CreateInstitution: React.FC = () => {
       latitude: false,
       longitude: false,
       about: false,
+      phone: false,
       retirement_or_center: false,
       instructions: false,
       working_hours: false,
@@ -83,6 +86,20 @@ const CreateInstitution: React.FC = () => {
     }
   }, []);
 
+  const handlePhoneChange = useCallback(event => {
+    const fieldName = event.target.getAttribute('name');
+    let { value } = event.target;
+    if (typeof value === 'string') {
+      value = value
+        .replace(/\D/g, '')
+        .replace(/(\d{2})(\d)/, '$1 $2')
+        .replace(/(\d{4})(\d)/, '$1-$2')
+        .replace(/(\d{4})-(\d)(\d{4})/, '$1$2-$3')
+        .replace(/(-\d{4})\d+?$/, '$1');
+    }
+    setValues(oldValues => ({ ...oldValues, [fieldName]: value }));
+  }, []);
+
   const defineErrorMessage = useCallback((key: string, message: string) => {
     setErrors(oldErrors => ({ ...oldErrors, [key]: message }));
   }, []);
@@ -101,6 +118,8 @@ const CreateInstitution: React.FC = () => {
     else defineErrorMessage('name', '');
     if (!values.about) defineErrorMessage('about', 'Campo obrigatório');
     else defineErrorMessage('about', '');
+    if (!values.phone) defineErrorMessage('phone', 'Campo obrigatório');
+    else defineErrorMessage('phone', '');
   }, [values, defineErrorMessage]);
 
   return (
@@ -133,30 +152,12 @@ const CreateInstitution: React.FC = () => {
             label="Nome"
             name="name"
             value={values.name}
-            onChange={event => handleChange(event)}
-            onBlur={event => handleBlur(event)}
+            onChange={handleChange}
+            onBlur={handleBlur}
             hasError={touched.name && !!errors.name}
             errorMessage={errors.name}
             optional="Teste opcional"
           />
-          <Textarea
-            id="about"
-            label="Sobre"
-            name="about"
-            value={values.about}
-            onChange={event => handleChange(event)}
-            onBlur={event => handleBlur(event)}
-            minLength={0}
-            maxLength={300}
-            hasError={touched.about && !!errors.about}
-            errorMessage={errors.about}
-            hasCounter
-            optional="Máximo de 300 caracteres"
-          />
-          <label htmlFor="name">
-            Nome
-            <input type="text" id="name" name="name" />
-          </label>
           <div>
             <div>
               <span>Tipo de instituição</span>
@@ -179,11 +180,31 @@ const CreateInstitution: React.FC = () => {
               <label htmlFor="center">Centro de convivência</label>
             </div>
           </div>
-          <label htmlFor="about">
-            Sobre
-            <span>Máximo de 300 caracteres</span>
-            <textarea id="about" maxLength={300} name="about" />
-          </label>
+          <Textarea
+            id="about"
+            label="Sobre"
+            name="about"
+            value={values.about}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            minLength={0}
+            maxLength={300}
+            hasError={touched.about && !!errors.about}
+            errorMessage={errors.about}
+            hasCounter
+            optional="Máximo de 300 caracteres"
+          />
+          <Input
+            id="phone"
+            label="Número de Whatsapp"
+            name="phone"
+            value={values.phone}
+            onChange={handlePhoneChange}
+            onBlur={handleBlur}
+            hasError={touched.phone && !!errors.phone}
+            errorMessage={errors.phone}
+            placeholder="__ _____-____"
+          />
           <label htmlFor="phone">
             Número de Whatsapp
             <input
