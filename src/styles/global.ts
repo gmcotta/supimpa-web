@@ -37,6 +37,9 @@ export default createGlobalStyle`
     --color-gradient-blue-light: #00c7c7;
     --color-green-lightest: #edfff6;
     --color-green-light: #a1e9c5;
+    --color-gray-light: #eee;
+    --color-gray: #ddd;
+    --color-gray-dark: #8a8d8b;
     --color-pink-lightest: #fdf0f5;
     --color-pink-light: #ffe4ee;
     --color-yellow: #ffd666;
@@ -46,6 +49,7 @@ export default createGlobalStyle`
     --color-text-green: #37c77f;
     --color-text-pink: #ff669d;
     --color-whatsapp: #37c77f;
+    --color-input-label-text: #8fa7b2;
     --color-input-border: #dde3f0;
   }
 `;

@@ -5,6 +5,8 @@ export const Form = styled.form`
 
   & fieldset {
     border: 0;
+    display: flex;
+    flex-direction: column;
 
     & + fieldset {
       margin-top: 8rem;
@@ -24,7 +26,7 @@ export const MapSection = styled.section`
   flex-direction: column;
   border-radius: 0.8rem;
   overflow: hidden;
-  /* margin: 6.4rem 0; */
+  margin: 4rem 0;
 
   & > span {
     height: 5.6rem;

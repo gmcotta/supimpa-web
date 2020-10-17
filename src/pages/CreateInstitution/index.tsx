@@ -4,6 +4,8 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
+import Input from '../../components/Input';
+
 import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
 
 import { Form, MapSection } from './styles';
@@ -44,6 +46,14 @@ const CreateInstitution: React.FC = () => {
             </div>
             <span>Clique no mapa para adicionar a localização</span>
           </MapSection>
+          <Input
+            id="name"
+            label="Nome"
+            name="name"
+            hasError
+            errorMessage="Teste"
+            optional="Teste opcional"
+          />
           <label htmlFor="name">
             Nome
             <input type="text" id="name" name="name" />
