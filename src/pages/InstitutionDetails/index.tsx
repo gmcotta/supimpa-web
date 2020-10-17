@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { useParams } from 'react-router-dom';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -31,6 +31,7 @@ type InstitutionProps = {
   about: string;
   retirement_or_center: string;
   phone: string;
+  formattedPhone: string;
   instructions: string;
   opening_hours: string;
   open_on_weekends: boolean;
@@ -45,11 +46,19 @@ const InstitutionDetails: React.FC = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { id } = useParams<InstitutionRouteParams>();
 
+  const formatPhoneNumber = useCallback((phone: string) => {
+    return phone.replace(/[\s-]/g, '');
+  }, []);
+
   useEffect(() => {
     api.get(`/institutions/${id}`).then(response => {
-      setInstitution(response.data);
+      const { data } = response;
+      setInstitution({
+        ...data,
+        formattedPhone: formatPhoneNumber(data.phone),
+      });
     });
-  }, [id]);
+  }, [id, formatPhoneNumber]);
 
   if (!institution) {
     return <div>Carregando...</div>;
@@ -138,7 +147,7 @@ const InstitutionDetails: React.FC = () => {
             </WorkOnWeekendsCard>
           </InstructionCardsWrapper>
           <WhatsappButton
-            href="https://api.whatsapp.com/send?phone=5511994150535"
+            href={`https://api.whatsapp.com/send?phone=+55${institution.formattedPhone}`}
             target="_blank"
             rel="noopener noreferrer"
           >
