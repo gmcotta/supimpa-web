@@ -5,6 +5,7 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
 import Input from '../../components/Input';
+import Textarea from '../../components/Textarea';
 
 import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
 
@@ -52,6 +53,17 @@ const CreateInstitution: React.FC = () => {
             name="name"
             hasError
             errorMessage="Teste"
+            optional="Teste opcional"
+          />
+          <Textarea
+            id="about"
+            label="Sobre"
+            name="about"
+            minLength={0}
+            maxLength={300}
+            hasError
+            hasCounter
+            errorMessage="Teste erro textarea"
             optional="Teste opcional"
           />
           <label htmlFor="name">

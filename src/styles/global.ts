@@ -43,6 +43,7 @@ export default createGlobalStyle`
     --color-pink-lightest: #fdf0f5;
     --color-pink-light: #ffe4ee;
     --color-yellow: #ffd666;
+    --color-orange: #ff9505;
     --color-brown: #8d734b;
     --color-title-dark-blue: #4d6f80;
     --color-text-blue: #5c8599;
