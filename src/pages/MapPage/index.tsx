@@ -103,7 +103,8 @@ const MapPage: React.FC = () => {
           zoom={15}
           style={{ width: '100%', height: '100%' }}
           onmoveend={(event: LeafletEvent) =>
-            console.log(event.target.getBounds())}
+            console.log(event.target.getBounds())
+          }
         >
           <TileLayer
             url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
@@ -133,7 +134,7 @@ const MapPage: React.FC = () => {
           ))}
         </Map>
       </MapContainer>
-      <Link to="/">
+      <Link to="/create">
         <MdAdd size={40} />
       </Link>
     </Container>
