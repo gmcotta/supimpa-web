@@ -1,5 +1,11 @@
+import React, {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { LeafletMouseEvent } from 'leaflet';
-import React, { FormEvent, useCallback, useState } from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 
 import DefaultTemplate from '../../templates/DefaultTemplate';
@@ -12,15 +18,90 @@ import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
 import { Form, MapSection } from './styles';
 
 const CreateInstitution: React.FC = () => {
-  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+  const initialValues = useMemo(
+    () => ({
+      name: '',
+      latitude: 0,
+      longitude: 0,
+      about: '',
+      retirement_or_center: '',
+      instructions: '',
+      working_hours: '',
+      open_on_weekends: true,
+      images: [],
+    }),
+    [],
+  );
+  const initialErrors = useMemo(
+    () => ({
+      name: '',
+      latitude: '',
+      longitude: '',
+      about: '',
+      retirement_or_center: '',
+      instructions: '',
+      working_hours: '',
+      open_on_weekends: '',
+      images: '',
+    }),
+    [],
+  );
+  const initialTouched = useMemo(
+    () => ({
+      name: false,
+      latitude: false,
+      longitude: false,
+      about: false,
+      retirement_or_center: false,
+      instructions: false,
+      working_hours: false,
+      open_on_weekends: false,
+      images: false,
+    }),
+    [],
+  );
+
+  const [values, setValues] = useState(initialValues);
+  const [errors, setErrors] = useState(initialErrors);
+  const [touched, setTouched] = useState(initialTouched);
+
+  const handleMapClick = useCallback((event: LeafletMouseEvent) => {
+    const { lat, lng } = event.latlng;
+    setValues(oldValues => ({ ...oldValues, latitude: lat, longitude: lng }));
+  }, []);
+
+  const handleChange = useCallback(event => {
+    const fieldName = event.target.getAttribute('name');
+    const fieldType = event.target.getAttribute('type');
+
+    if (fieldType === 'checkbox') {
+      const { checked } = event.target;
+      setValues(oldValues => ({ ...oldValues, [fieldName]: checked }));
+    } else {
+      const { value } = event.target;
+      setValues(oldValues => ({ ...oldValues, [fieldName]: value }));
+    }
+  }, []);
+
+  const defineErrorMessage = useCallback((key: string, message: string) => {
+    setErrors(oldErrors => ({ ...oldErrors, [key]: message }));
+  }, []);
+
+  const handleBlur = useCallback(event => {
+    const fieldName = event.target.getAttribute('name');
+    setTouched(oldTouched => ({ ...oldTouched, [fieldName]: true }));
+  }, []);
+
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault();
   }, []);
 
-  const handleMapClick = useCallback((event: LeafletMouseEvent) => {
-    const { lat, lng } = event.latlng;
-    setPosition({ latitude: lat, longitude: lng });
-  }, []);
+  useEffect(() => {
+    if (!values.name) defineErrorMessage('name', 'Campo obrigatório');
+    else defineErrorMessage('name', '');
+    if (!values.about) defineErrorMessage('about', 'Campo obrigatório');
+    else defineErrorMessage('about', '');
+  }, [values, defineErrorMessage]);
 
   return (
     <DefaultTemplate>
@@ -41,7 +122,7 @@ const CreateInstitution: React.FC = () => {
                 />
                 <Marker
                   icon={retirementHomeIcon}
-                  position={[position.latitude, position.longitude]}
+                  position={[values.latitude, values.longitude]}
                 />
               </Map>
             </div>
@@ -51,20 +132,26 @@ const CreateInstitution: React.FC = () => {
             id="name"
             label="Nome"
             name="name"
-            hasError
-            errorMessage="Teste"
+            value={values.name}
+            onChange={event => handleChange(event)}
+            onBlur={event => handleBlur(event)}
+            hasError={touched.name && !!errors.name}
+            errorMessage={errors.name}
             optional="Teste opcional"
           />
           <Textarea
             id="about"
             label="Sobre"
             name="about"
+            value={values.about}
+            onChange={event => handleChange(event)}
+            onBlur={event => handleBlur(event)}
             minLength={0}
             maxLength={300}
-            hasError
+            hasError={touched.about && !!errors.about}
+            errorMessage={errors.about}
             hasCounter
-            errorMessage="Teste erro textarea"
-            optional="Teste opcional"
+            optional="Máximo de 300 caracteres"
           />
           <label htmlFor="name">
             Nome
@@ -78,7 +165,7 @@ const CreateInstitution: React.FC = () => {
                 name="retirement_or_center"
                 id="retirement"
                 value="retirement"
-                checked
+                defaultChecked
               />
               <label htmlFor="retirement">Casa de repouso</label>
             </div>

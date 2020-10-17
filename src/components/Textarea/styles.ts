@@ -37,7 +37,7 @@ export const Container = styled.div<TextareaProps>`
 
   & textarea {
     resize: none;
-    height: 12rem;
+    height: 16.8rem;
     font-size: 2rem;
     color: var(--color-text-blue);
     background-color: var(--color-white);
@@ -66,7 +66,8 @@ export const Container = styled.div<TextareaProps>`
 `;
 
 const statusColors: StatusProps = {
-  min: 'var(--color-red-error)',
+  // min: 'var(--color-red-error)',
+  min: 'var(--color-text-blue)',
   ok: 'var(--color-text-blue)',
   caution: 'var(--color-yellow)',
   danger: 'var(--color-orange)',
