@@ -116,10 +116,14 @@ const CreateInstitution: React.FC = () => {
   useEffect(() => {
     if (!values.name) defineErrorMessage('name', 'Campo obrigatório');
     else defineErrorMessage('name', '');
+
     if (!values.about) defineErrorMessage('about', 'Campo obrigatório');
     else defineErrorMessage('about', '');
+
     if (!values.phone) defineErrorMessage('phone', 'Campo obrigatório');
-    else defineErrorMessage('phone', '');
+    if (!values.phone.match(/^\d{2} \d{4,5}-\d{4}$/)) {
+      defineErrorMessage('phone', 'Telefone no padrão incorreto');
+    } else defineErrorMessage('phone', '');
   }, [values, defineErrorMessage]);
 
   return (
