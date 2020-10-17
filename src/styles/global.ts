@@ -46,5 +46,6 @@ export default createGlobalStyle`
     --color-text-green: #37c77f;
     --color-text-pink: #ff669d;
     --color-whatsapp: #37c77f;
+    --color-input-border: #dde3f0;
   }
 `;

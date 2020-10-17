@@ -79,7 +79,7 @@ export const MapSection = styled.section`
     align-items: center;
     background-color: var(--color-blue-lightest-2);
     text-decoration: none;
-    color: var(--color-title-blue);
+    color: var(--color-text-blue);
     font-size: 2rem;
     transition: background-color 0.2s;
 

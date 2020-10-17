@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const Card = styled.main`
   max-width: 80rem;
   margin: 0 auto;
-  background-color: var(--color-background-light);
+  background-color: var(--color-white);
   border-radius: 1.6rem;
   overflow: hidden;
 `;
