@@ -43,6 +43,10 @@ export const MapSection = styled.div`
     text-decoration: none;
     color: var(--color-text-blue);
     font-size: 2rem;
+
+    &.error {
+      color: var(--color-red-error);
+    }
   }
 `;
 
@@ -153,7 +157,7 @@ export const ImagesSection = styled.div`
   }
 
   > div {
-    margin-top: 0.8rem;
+    margin: 0.8rem 0;
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(6, 1fr);
@@ -205,6 +209,12 @@ export const ImagesSection = styled.div`
     & input {
       display: none;
     }
+  }
+
+  & span {
+    font-size: 1.6rem;
+    color: var(--color-red-error);
+    font-weight: 500;
   }
 `;
 

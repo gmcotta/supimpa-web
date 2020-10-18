@@ -95,6 +95,11 @@ const CreateInstitution: React.FC = () => {
   const handleMapClick = useCallback((event: LeafletMouseEvent) => {
     const { lat, lng } = event.latlng;
     setValues(oldValues => ({ ...oldValues, latitude: lat, longitude: lng }));
+    setTouched(oldValues => ({
+      ...oldValues,
+      latitude: false,
+      longitude: false,
+    }));
   }, []);
 
   const handleChange = useCallback(event => {
@@ -148,6 +153,7 @@ const CreateInstitution: React.FC = () => {
         // }
       });
       setValues(oldValues => ({ ...oldValues, images: newImagesArray }));
+      setTouched(oldTouched => ({ ...oldTouched, images: false }));
 
       const selectedImagesPreview = selectedImages.map(image => {
         return URL.createObjectURL(image);
@@ -182,9 +188,35 @@ const CreateInstitution: React.FC = () => {
     [previewImages, values.images],
   );
 
-  const handleSubmit = useCallback((event: FormEvent) => {
-    event.preventDefault();
-  }, []);
+  const handleSubmit = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault();
+      if (
+        errors.name ||
+        errors.about ||
+        errors.phone ||
+        errors.instructions ||
+        errors.working_hours ||
+        (values.latitude === 0 && values.longitude === 0) ||
+        values.images.length === 0
+      ) {
+        setTouched(oldValues => ({
+          ...oldValues,
+          name: true,
+          about: true,
+          phone: true,
+          instructions: true,
+          working_hours: true,
+          latitude: true,
+          longitude: true,
+          images: true,
+        }));
+      } else {
+        console.log('Deu certo');
+      }
+    },
+    [errors, values],
+  );
 
   const defineErrorMessage = useCallback((key: string, message: string) => {
     setErrors(oldErrors => ({ ...oldErrors, [key]: message }));
@@ -192,6 +224,14 @@ const CreateInstitution: React.FC = () => {
 
   // Set error messages
   useEffect(() => {
+    if (values.latitude === 0 && values.longitude === 0) {
+      defineErrorMessage('latitude', 'Campo obrigatório');
+      defineErrorMessage('longitude', 'Campo obrigatório');
+    } else {
+      defineErrorMessage('latitude', '');
+      defineErrorMessage('longitude', '');
+    }
+
     if (!values.name) defineErrorMessage('name', 'Campo obrigatório');
     else defineErrorMessage('name', '');
 
@@ -201,6 +241,10 @@ const CreateInstitution: React.FC = () => {
     if (!values.phone.match(/^\d{2} \d{4,5}-\d{4}$/))
       defineErrorMessage('phone', 'Telefone no padrão incorreto');
     else defineErrorMessage('phone', '');
+
+    if (values.images.length === 0)
+      defineErrorMessage('images', 'Campo obrigatório');
+    else defineErrorMessage('images', '');
 
     if (!values.instructions)
       defineErrorMessage('instructions', 'Campo obrigatório');
@@ -238,7 +282,18 @@ const CreateInstitution: React.FC = () => {
                 />
               </Map>
             </div>
-            <span>Clique no mapa para adicionar a localização</span>
+            <span
+              className={
+                !!errors.latitude &&
+                touched.latitude &&
+                !!errors.latitude &&
+                touched.longitude
+                  ? 'error'
+                  : ''
+              }
+            >
+              Clique no mapa para adicionar a localização
+            </span>
           </MapSection>
           <ElementWrapper>
             <Input
@@ -347,6 +402,9 @@ const CreateInstitution: React.FC = () => {
                 />
               </label>
             </div>
+            {touched.images && !!errors.images && (
+              <span>Obrigatório incluir uma foto</span>
+            )}
           </ImagesSection>
         </fieldset>
         <fieldset>
