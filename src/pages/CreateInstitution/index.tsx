@@ -28,6 +28,7 @@ import {
   ElementWrapper,
   SubmitButton,
 } from './styles';
+import api from '../../services/api';
 
 type ValueProps = {
   name: string;
@@ -37,7 +38,7 @@ type ValueProps = {
   phone: string;
   retirement_or_center: string;
   instructions: string;
-  working_hours: string;
+  opening_hours: string;
   open_on_weekends: boolean;
   images: File[];
 };
@@ -65,7 +66,7 @@ const CreateInstitution: React.FC = () => {
       phone: '',
       retirement_or_center: 'retirement',
       instructions: '',
-      working_hours: '',
+      opening_hours: '',
       open_on_weekends: true,
       images: [],
     }),
@@ -80,7 +81,7 @@ const CreateInstitution: React.FC = () => {
       phone: '',
       retirement_or_center: '',
       instructions: '',
-      working_hours: '',
+      opening_hours: '',
       open_on_weekends: '',
       images: '',
     }),
@@ -95,7 +96,7 @@ const CreateInstitution: React.FC = () => {
       phone: false,
       retirement_or_center: false,
       instructions: false,
-      working_hours: false,
+      opening_hours: false,
       open_on_weekends: false,
       images: false,
     }),
@@ -205,14 +206,14 @@ const CreateInstitution: React.FC = () => {
   );
 
   const handleSubmit = useCallback(
-    (event: FormEvent) => {
+    async (event: FormEvent) => {
       event.preventDefault();
       if (
         errors.name ||
         errors.about ||
         errors.phone ||
         errors.instructions ||
-        errors.working_hours ||
+        errors.opening_hours ||
         (values.latitude === 0 && values.longitude === 0) ||
         values.images.length === 0
       ) {
@@ -222,13 +223,28 @@ const CreateInstitution: React.FC = () => {
           about: true,
           phone: true,
           instructions: true,
-          working_hours: true,
+          opening_hours: true,
           latitude: true,
           longitude: true,
           images: true,
         }));
       } else {
-        console.log('Deu certo');
+        const data = new FormData();
+        data.append('about', values.about);
+        data.append('instructions', values.instructions);
+        data.append('name', values.name);
+        data.append('phone', values.phone);
+        data.append('retirement_or_center', values.retirement_or_center);
+        data.append('opening_hours', values.opening_hours);
+        data.append('open_on_weekends', String(values.open_on_weekends));
+        data.append('latitude', String(values.latitude));
+        data.append('longitude', String(values.longitude));
+        values.images.forEach(image => {
+          data.append('images', image);
+        });
+        console.log(data);
+
+        await api.post('/institutions', data);
         history.push('/thank-you');
       }
     },
@@ -284,9 +300,9 @@ const CreateInstitution: React.FC = () => {
       defineErrorMessage('instructions', 'Campo obrigatório');
     else defineErrorMessage('instructions', '');
 
-    if (!values.working_hours)
-      defineErrorMessage('working_hours', 'Campo obrigatório');
-    else defineErrorMessage('working_hours', '');
+    if (!values.opening_hours)
+      defineErrorMessage('opening_hours', 'Campo obrigatório');
+    else defineErrorMessage('opening_hours', '');
   }, [values, defineErrorMessage]);
 
   return (
@@ -457,14 +473,14 @@ const CreateInstitution: React.FC = () => {
           </ElementWrapper>
           <ElementWrapper>
             <Input
-              id="working_hours"
+              id="opening_hours"
               label="Horário de funcionamento"
-              name="working_hours"
-              value={values.working_hours}
+              name="opening_hours"
+              value={values.opening_hours}
               onChange={handleChange}
               onBlur={handleBlur}
-              hasError={touched.working_hours && !!errors.working_hours}
-              errorMessage={errors.working_hours}
+              hasError={touched.opening_hours && !!errors.opening_hours}
+              errorMessage={errors.opening_hours}
               optional="Ex.: Das 8h às 17h"
               className="block--spacing"
             />
