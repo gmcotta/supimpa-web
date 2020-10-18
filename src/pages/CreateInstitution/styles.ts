@@ -1,7 +1,12 @@
+import { darken } from 'polished';
 import styled from 'styled-components';
 
 export const Form = styled.form`
   padding: 8rem;
+
+  .block--spacing {
+    margin-bottom: 2.4rem;
+  }
 
   & fieldset {
     border: 0;
@@ -17,6 +22,7 @@ export const Form = styled.form`
     width: 100%;
     font-size: 3.2rem;
     padding-bottom: 3.2rem;
+    margin-bottom: 3.2rem;
     border-bottom: 1px solid var(--color-input-border);
   }
 `;
@@ -26,7 +32,7 @@ export const MapSection = styled.div`
   flex-direction: column;
   border-radius: 0.8rem;
   overflow: hidden;
-  margin: 4rem 0;
+  margin-bottom: 2.4rem;
 
   & > span {
     height: 5.6rem;
@@ -199,5 +205,29 @@ export const ImagesSection = styled.div`
     & input {
       display: none;
     }
+  }
+`;
+
+export const ElementWrapper = styled.div`
+  margin-bottom: 2.4rem;
+`;
+
+export const SubmitButton = styled.button`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 6.4rem;
+  border-radius: 0.8rem;
+  border: none;
+  font-size: 2rem;
+  text-decoration: none;
+  background-color: var(--color-whatsapp);
+  color: var(--color-light);
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: ${darken(0.05, '#37c77f')};
+    cursor: pointer;
   }
 `;

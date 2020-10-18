@@ -23,6 +23,8 @@ import {
   RadioButtonSection,
   Checkbox,
   ImagesSection,
+  ElementWrapper,
+  SubmitButton,
 } from './styles';
 
 type ValueProps = {
@@ -238,80 +240,88 @@ const CreateInstitution: React.FC = () => {
             </div>
             <span>Clique no mapa para adicionar a localização</span>
           </MapSection>
-          <Input
-            id="name"
-            label="Nome"
-            name="name"
-            value={values.name}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            hasError={touched.name && !!errors.name}
-            errorMessage={errors.name}
-          />
-          <RadioButtonSection>
-            <span>Tipo de instituição</span>
-            <div>
-              <label htmlFor="retirement">
-                <input
-                  type="radio"
-                  name="retirement_or_center"
-                  id="retirement"
-                  value="retirement"
-                  onChange={handleChange}
-                />
-                <span
-                  className={
-                    values.retirement_or_center === 'retirement'
-                      ? 'selected'
-                      : ''
-                  }
-                />
-                Casa de repouso
-              </label>
-            </div>
-            <div>
-              <label htmlFor="center">
-                <input
-                  type="radio"
-                  name="retirement_or_center"
-                  id="center"
-                  value="center"
-                  onChange={handleChange}
-                />
-                <span
-                  className={
-                    values.retirement_or_center === 'center' ? 'selected' : ''
-                  }
-                />
-                Centro de convivência
-              </label>
-            </div>
-          </RadioButtonSection>
-          <Textarea
-            id="about"
-            label="Sobre"
-            name="about"
-            value={values.about}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            minLength={0}
-            maxLength={300}
-            hasError={touched.about && !!errors.about}
-            errorMessage={errors.about}
-            hasCounter
-            optional="Máximo de 300 caracteres"
-          />
-          <Input
-            id="phone"
-            label="Número de Whatsapp"
-            name="phone"
-            value={values.phone}
-            onChange={handlePhoneChange}
-            onBlur={handleBlur}
-            hasError={touched.phone && !!errors.phone}
-            errorMessage={errors.phone}
-            placeholder="__ _____-____"
-          />
+          <ElementWrapper>
+            <Input
+              id="name"
+              label="Nome"
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              hasError={touched.name && !!errors.name}
+              errorMessage={errors.name}
+            />
+          </ElementWrapper>
+          <ElementWrapper>
+            <RadioButtonSection>
+              <span>Tipo de instituição</span>
+              <div>
+                <label htmlFor="retirement">
+                  <input
+                    type="radio"
+                    name="retirement_or_center"
+                    id="retirement"
+                    value="retirement"
+                    onChange={handleChange}
+                  />
+                  <span
+                    className={
+                      values.retirement_or_center === 'retirement'
+                        ? 'selected'
+                        : ''
+                    }
+                  />
+                  Casa de repouso
+                </label>
+              </div>
+              <div>
+                <label htmlFor="center">
+                  <input
+                    type="radio"
+                    name="retirement_or_center"
+                    id="center"
+                    value="center"
+                    onChange={handleChange}
+                  />
+                  <span
+                    className={
+                      values.retirement_or_center === 'center' ? 'selected' : ''
+                    }
+                  />
+                  Centro de convivência
+                </label>
+              </div>
+            </RadioButtonSection>
+          </ElementWrapper>
+          <ElementWrapper>
+            <Textarea
+              id="about"
+              label="Sobre"
+              name="about"
+              value={values.about}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              minLength={0}
+              maxLength={300}
+              hasError={touched.about && !!errors.about}
+              errorMessage={errors.about}
+              hasCounter
+              optional="Máximo de 300 caracteres"
+            />
+          </ElementWrapper>
+          <ElementWrapper>
+            <Input
+              id="phone"
+              label="Número de Whatsapp"
+              name="phone"
+              value={values.phone}
+              onChange={handlePhoneChange}
+              onBlur={handleBlur}
+              hasError={touched.phone && !!errors.phone}
+              errorMessage={errors.phone}
+              placeholder="__ _____-____"
+            />
+          </ElementWrapper>
           <ImagesSection>
             <label htmlFor="images">Fotos</label>
             <div>
@@ -328,55 +338,62 @@ const CreateInstitution: React.FC = () => {
               ))}
               <label htmlFor="add_image">
                 <FiPlus />
+                <input
+                  type="file"
+                  name="image"
+                  id="add_image"
+                  multiple
+                  onChange={handleSelectImages}
+                />
               </label>
-              <input
-                type="file"
-                name="image"
-                id="add_image"
-                multiple
-                onChange={handleSelectImages}
-              />
             </div>
           </ImagesSection>
         </fieldset>
         <fieldset>
           <legend>Visitação</legend>
-          <Textarea
-            id="instructions"
-            label="Instruções"
-            name="instructions"
-            value={values.instructions}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            hasError={touched.instructions && !!errors.instructions}
-            errorMessage={errors.instructions}
-          />
-          <Input
-            id="working_hours"
-            label="Horário de funcionamento"
-            name="working_hours"
-            value={values.working_hours}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            hasError={touched.working_hours && !!errors.working_hours}
-            errorMessage={errors.working_hours}
-            optional="Ex.: Das 8h às 17h"
-          />
-          <Checkbox>
-            <label htmlFor="open_on_weekends">
-              Atende fim de semana?
-              <span className={values.open_on_weekends ? 'checked' : ''} />
-              <input
-                type="checkbox"
-                name="open_on_weekends"
-                id="open_on_weekends"
-                onChange={handleChange}
-                defaultChecked
-              />
-            </label>
-          </Checkbox>
+          <ElementWrapper>
+            <Textarea
+              id="instructions"
+              label="Instruções"
+              name="instructions"
+              value={values.instructions}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              hasError={touched.instructions && !!errors.instructions}
+              errorMessage={errors.instructions}
+            />
+          </ElementWrapper>
+          <ElementWrapper>
+            <Input
+              id="working_hours"
+              label="Horário de funcionamento"
+              name="working_hours"
+              value={values.working_hours}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              hasError={touched.working_hours && !!errors.working_hours}
+              errorMessage={errors.working_hours}
+              optional="Ex.: Das 8h às 17h"
+              className="block--spacing"
+            />
+          </ElementWrapper>
+          <ElementWrapper>
+            <Checkbox>
+              <label htmlFor="open_on_weekends">
+                Atende fim de semana?
+                <span className={values.open_on_weekends ? 'checked' : ''} />
+                <input
+                  type="checkbox"
+                  name="open_on_weekends"
+                  id="open_on_weekends"
+                  onChange={handleChange}
+                  defaultChecked
+                />
+              </label>
+            </Checkbox>
+          </ElementWrapper>
         </fieldset>
-        <button type="submit">Confirmar</button>
+        <SubmitButton type="submit">Confirmar</SubmitButton>
       </Form>
     </DefaultTemplate>
   );
