@@ -55,9 +55,27 @@ export const Aside = styled.aside`
 
   & footer {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     font-size: 2.4rem;
+
+    & a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 6.4rem;
+      height: 6.4rem;
+      border-radius: 0.8rem;
+      margin-top: 0.8rem;
+      background-color: var(--color-blue-light);
+      color: var(--color-light);
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: var(--color-blue-dark);
+      }
+    }
   }
 `;
 
