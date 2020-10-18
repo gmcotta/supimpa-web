@@ -9,6 +9,7 @@ import React, {
 import { LeafletMouseEvent } from 'leaflet';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 import { FiPlus } from 'react-icons/fi';
 import DefaultTemplate from '../../templates/DefaultTemplate';
@@ -39,6 +40,17 @@ type ValueProps = {
   working_hours: string;
   open_on_weekends: boolean;
   images: File[];
+};
+
+type OpenCageDataResponse = {
+  data: {
+    results: Array<{
+      geometry: {
+        lat: number;
+        lng: number;
+      };
+    }>;
+  };
 };
 
 const CreateInstitution: React.FC = () => {
@@ -90,6 +102,7 @@ const CreateInstitution: React.FC = () => {
     [],
   );
 
+  const [cityLocation, setCityLocation] = useState<[number, number]>([0, 0]);
   const [values, setValues] = useState<ValueProps>(initialValues);
   const [errors, setErrors] = useState(initialErrors);
   const [touched, setTouched] = useState(initialTouched);
@@ -226,6 +239,23 @@ const CreateInstitution: React.FC = () => {
     setErrors(oldErrors => ({ ...oldErrors, [key]: message }));
   }, []);
 
+  useEffect(() => {
+    const localStorageLocation = localStorage.getItem('@HOME/Location');
+    if (localStorageLocation === null) {
+      history.push('/');
+    } else {
+      const { city, state } = JSON.parse(localStorageLocation);
+      axios
+        .get(
+          `https://api.opencagedata.com/geocode/v1/json?key=${process.env.REACT_APP_OPENCAGEDATA_TOKEN}&q=${city},%20${state}&pretty=1&limit=1`,
+        )
+        .then((response: OpenCageDataResponse) => {
+          const { lat, lng } = response.data.results[0].geometry;
+          setCityLocation([lat, lng]);
+        });
+    }
+  }, [history]);
+
   // Set error messages
   useEffect(() => {
     if (values.latitude === 0 && values.longitude === 0) {
@@ -268,7 +298,7 @@ const CreateInstitution: React.FC = () => {
             <div style={{ width: '100%', height: 320 }}>
               <Map
                 // center={[-23.4439484, -46.5258909]}
-                center={[-23.4439484, -46.5258909]}
+                center={cityLocation}
                 zoom={15}
                 style={{ width: '100%', height: '100%' }}
                 onClick={handleMapClick}
