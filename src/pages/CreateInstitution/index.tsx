@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { LeafletMouseEvent } from 'leaflet';
 import { Map, TileLayer, Marker } from 'react-leaflet';
+import { useHistory } from 'react-router-dom';
 
 import { FiPlus } from 'react-icons/fi';
 import DefaultTemplate from '../../templates/DefaultTemplate';
@@ -41,6 +42,8 @@ type ValueProps = {
 };
 
 const CreateInstitution: React.FC = () => {
+  const history = useHistory();
+
   const initialValues = useMemo(
     () => ({
       name: '',
@@ -213,9 +216,10 @@ const CreateInstitution: React.FC = () => {
         }));
       } else {
         console.log('Deu certo');
+        history.push('/thank-you');
       }
     },
-    [errors, values],
+    [errors, values, history],
   );
 
   const defineErrorMessage = useCallback((key: string, message: string) => {
