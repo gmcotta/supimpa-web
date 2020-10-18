@@ -40,7 +40,7 @@ export const Container = styled.div<TextareaProps>`
     height: 16.8rem;
     font-size: 2rem;
     color: var(--color-text-blue);
-    background-color: var(--color-white);
+    background-color: var(--color-background-light);
     border: 1px solid
       ${props =>
         props.hasError

@@ -1,4 +1,5 @@
 import React, {
+  ChangeEvent,
   FormEvent,
   useCallback,
   useEffect,
@@ -8,6 +9,7 @@ import React, {
 import { LeafletMouseEvent } from 'leaflet';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 
+import { FiPlus } from 'react-icons/fi';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
 import Input from '../../components/Input';
@@ -15,7 +17,26 @@ import Textarea from '../../components/Textarea';
 
 import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
 
-import { Form, MapSection, RadioButtonSection, Checkbox } from './styles';
+import {
+  Form,
+  MapSection,
+  RadioButtonSection,
+  Checkbox,
+  ImagesSection,
+} from './styles';
+
+type ValueProps = {
+  name: string;
+  latitude: number;
+  longitude: number;
+  about: string;
+  phone: string;
+  retirement_or_center: string;
+  instructions: string;
+  working_hours: string;
+  open_on_weekends: boolean;
+  images: File[];
+};
 
 const CreateInstitution: React.FC = () => {
   const initialValues = useMemo(
@@ -64,9 +85,10 @@ const CreateInstitution: React.FC = () => {
     [],
   );
 
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState<ValueProps>(initialValues);
   const [errors, setErrors] = useState(initialErrors);
   const [touched, setTouched] = useState(initialTouched);
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const handleMapClick = useCallback((event: LeafletMouseEvent) => {
     const { lat, lng } = event.latlng;
@@ -100,19 +122,73 @@ const CreateInstitution: React.FC = () => {
     setValues(oldValues => ({ ...oldValues, [fieldName]: value }));
   }, []);
 
-  const defineErrorMessage = useCallback((key: string, message: string) => {
-    setErrors(oldErrors => ({ ...oldErrors, [key]: message }));
-  }, []);
-
   const handleBlur = useCallback(event => {
     const fieldName = event.target.getAttribute('name');
     setTouched(oldTouched => ({ ...oldTouched, [fieldName]: true }));
   }, []);
 
+  const handleSelectImages = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const { files } = event.target;
+      if (!files) {
+        return;
+      }
+
+      const selectedImages = Array.from(files);
+      const newImagesArray = values.images;
+      selectedImages.forEach(newImage => {
+        newImagesArray.push(newImage);
+        // const findDuplicatedImage = newImagesArray.find(
+        //   image => image.name === newImage.name,
+        // );
+        // if (!findDuplicatedImage) {
+        //   console.log(newImage.name);
+        // }
+      });
+      setValues(oldValues => ({ ...oldValues, images: newImagesArray }));
+
+      const selectedImagesPreview = selectedImages.map(image => {
+        return URL.createObjectURL(image);
+      });
+      const newPreviewImagesArray = previewImages;
+      selectedImagesPreview.forEach(newImage => {
+        newPreviewImagesArray.push(newImage);
+        // const findDuplicatedImage = newPreviewImagesArray.find(
+        //   image => image === newImage,
+        // );
+        // if (!findDuplicatedImage) {
+        //   console.log(newImage);
+        // }
+      });
+      setPreviewImages(newPreviewImagesArray);
+    },
+    [previewImages, values.images],
+  );
+
+  const handleDeleteImage = useCallback(
+    (image: string, index: number) => {
+      const filteredPreviewImages = previewImages.filter(
+        previewImage => previewImage !== image,
+      );
+      setPreviewImages(filteredPreviewImages);
+
+      const filteredImages = values.images.filter(
+        (_, imageIndex) => imageIndex !== index,
+      );
+      setValues(oldValues => ({ ...oldValues, images: filteredImages }));
+    },
+    [previewImages, values.images],
+  );
+
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault();
   }, []);
 
+  const defineErrorMessage = useCallback((key: string, message: string) => {
+    setErrors(oldErrors => ({ ...oldErrors, [key]: message }));
+  }, []);
+
+  // Set error messages
   useEffect(() => {
     if (!values.name) defineErrorMessage('name', 'Campo obrigatório');
     else defineErrorMessage('name', '');
@@ -120,10 +196,17 @@ const CreateInstitution: React.FC = () => {
     if (!values.about) defineErrorMessage('about', 'Campo obrigatório');
     else defineErrorMessage('about', '');
 
-    if (!values.phone) defineErrorMessage('phone', 'Campo obrigatório');
-    if (!values.phone.match(/^\d{2} \d{4,5}-\d{4}$/)) {
+    if (!values.phone.match(/^\d{2} \d{4,5}-\d{4}$/))
       defineErrorMessage('phone', 'Telefone no padrão incorreto');
-    } else defineErrorMessage('phone', '');
+    else defineErrorMessage('phone', '');
+
+    if (!values.instructions)
+      defineErrorMessage('instructions', 'Campo obrigatório');
+    else defineErrorMessage('instructions', '');
+
+    if (!values.working_hours)
+      defineErrorMessage('working_hours', 'Campo obrigatório');
+    else defineErrorMessage('working_hours', '');
   }, [values, defineErrorMessage]);
 
   return (
@@ -229,7 +312,32 @@ const CreateInstitution: React.FC = () => {
             errorMessage={errors.phone}
             placeholder="__ _____-____"
           />
-          <div>Fotos</div>
+          <ImagesSection>
+            <label htmlFor="images">Fotos</label>
+            <div>
+              {previewImages.map((image, index) => (
+                <div key={`${values.name}-${index + 1}`}>
+                  <img src={image} alt={`${values.name}-${index + 1}`} />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(image, index)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+              <label htmlFor="add_image">
+                <FiPlus />
+              </label>
+              <input
+                type="file"
+                name="image"
+                id="add_image"
+                multiple
+                onChange={handleSelectImages}
+              />
+            </div>
+          </ImagesSection>
         </fieldset>
         <fieldset>
           <legend>Visitação</legend>

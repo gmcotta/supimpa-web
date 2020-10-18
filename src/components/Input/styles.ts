@@ -27,7 +27,7 @@ export const Container = styled.div<InputProps>`
   }
 
   & input {
-    background-color: var(--color-white);
+    background-color: var(--color-background-light);
     height: 4.8rem;
     font-size: 2rem;
     color: var(--color-text-blue);

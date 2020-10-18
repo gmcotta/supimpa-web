@@ -21,7 +21,7 @@ export const Form = styled.form`
   }
 `;
 
-export const MapSection = styled.section`
+export const MapSection = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 0.8rem;
@@ -40,7 +40,7 @@ export const MapSection = styled.section`
   }
 `;
 
-export const RadioButtonSection = styled.section`
+export const RadioButtonSection = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -110,7 +110,7 @@ export const Checkbox = styled.div`
       height: 2.4rem;
       border-radius: 1.6rem;
       border: 1px solid var(--color-input-border);
-      background-color: var(--color-white);
+      background-color: var(--color-background-light);
       display: flex;
       align-items: center;
       padding: 0 0.8rem;
@@ -133,8 +133,71 @@ export const Checkbox = styled.div`
       }
 
       &.checked::after {
-        background-color: var(--color-white);
+        background-color: var(--color-background-light);
       }
+    }
+  }
+`;
+
+export const ImagesSection = styled.div`
+  & label {
+    font-size: 1.6rem;
+    color: var(--color-input-label-text);
+    font-weight: 500;
+  }
+
+  > div {
+    margin-top: 0.8rem;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(6, 1fr);
+    row-gap: 1.6rem;
+
+    & div {
+      position: relative;
+      width: 9.6rem;
+      height: 9.6rem;
+
+      & img {
+        height: 9.6rem;
+        width: 9.6rem;
+        object-fit: cover;
+        border-radius: 20px;
+        border: 1px solid var(--color-input-label-text);
+      }
+
+      & button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0 2rem 0 2rem;
+        border: 1px solid var(--color-input-border);
+        background-color: var(--color-white);
+        z-index: 10;
+        cursor: pointer;
+      }
+    }
+
+    & label {
+      height: 9.6rem;
+      width: 9.6rem;
+      background-color: var(--color-background-light);
+      border: 1px dashed var(--color-input-label-text);
+      border-radius: 20px;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    & input {
+      display: none;
     }
   }
 `;
