@@ -1,44 +1,71 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">
+    <img alt="Supimpa" title="Supimpa" src=".github/images/github-logo.png">
+</h1>
 
-## Available Scripts
+## Projeto
 
-In the project directory, you can run:
+Supimpa é uma aplicação para cadastrar casas de repouso e centro de convivência para idosos.
 
-### `yarn start`
+## Demonstração
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [Vídeo da aplicação](https://www.youtube.com/watch?v=smu-UUQzPcg)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Tecnologias
 
-### `yarn test`
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React
+- React-router-dom
+- Styled-components
+- Axios
+- Leaflet
+- Polished
+- Mapbox
+- React-lottie
+- React-modal
+- React-icons
+- ESLint
+- Prettier
+- Typescript
 
-### `yarn build`
+Foram usadas as seguintes APIs:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [OpenCage](https://opencagedata.com/)
+- [IBGE](https://servicodados.ibge.gov.br/api/docs)
+- [Supimpa-api](https://github.com/gmcotta/supimpa-api)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Como rodar localmente
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Faça o clone esse repositório:
 
-### `yarn eject`
+```
+git clone https://github.com/gmcotta/supimpa-web.git
+```
+- Abra seu terminal na pasta gerada
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Caso tenha o [Yarn](https://yarnpkg.com/) instalado, digite o comando:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+yarn
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Duplique o arquivo ```.env.example``` e renomeie para ```.env```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Faça o cadastro no site da [OpenCage](https://opencagedata.com/) e na [Mapbox](https://www.mapbox.com/). Os dois sites possuem um plano gratuito.
 
-## Learn More
+- No site da OpenCage, faça o log in, acesse [esse link](https://opencagedata.com/dashboard#api-keys), copie a API key e cole no campo ```REACT_APP_OPENCAGEDATA_TOKEN``` do arquivo ```.env```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Nos site da Mapbox, faça o log in, acesse [esse link](https://account.mapbox.com/), desca até o card de token de acesso, copie o token e cole no campo ```REACT_APP_MAPBOX_TOKEN``` do arquivo ```.env```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Verifique se não há nenhuma aplicação usando a porta 3000. Caso não tenha, digite o comando:
+
+```
+yarn start
+```
+
+## Outras informações
+
+Para mais informações sobre as ferramentas utilizadas, acesse os seguintes repositórios:
+
+- [Back-end](https://github.com/gmcotta/supimpa-api)
+- [Mobile](https://github.com/gmcotta/supimpa-mobile)
