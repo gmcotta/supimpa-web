@@ -36,11 +36,14 @@ Foram usadas as seguintes APIs:
 
 ## Como rodar localmente
 
+- Rode a API da aplicação (acesse [esse link](https://github.com/gmcotta/supimpa-api) para mais detalhes)
+
 - Faça o clone esse repositório:
 
 ```
 git clone https://github.com/gmcotta/supimpa-web.git
 ```
+
 - Abra seu terminal na pasta gerada
 
 - Caso tenha o [Yarn](https://yarnpkg.com/) instalado, digite o comando:
