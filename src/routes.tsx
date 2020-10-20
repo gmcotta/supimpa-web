@@ -6,6 +6,7 @@ import MapPage from './pages/MapPage';
 import InstitutionDetails from './pages/InstitutionDetails';
 import CreateInstitution from './pages/CreateInstitution';
 import ThankYouPage from './pages/ThankYouPage';
+import AdminLogin from './pages/Admin/Login';
 
 const Routes: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const Routes: React.FC = () => {
         <Route path="/institutions/:id" exact component={InstitutionDetails} />
         <Route path="/create" exact component={CreateInstitution} />
         <Route path="/thank-you" exact component={ThankYouPage} />
+        <Route path="/admin" exact component={AdminLogin} />
       </Switch>
     </BrowserRouter>
   );
