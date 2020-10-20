@@ -16,6 +16,7 @@ import DefaultTemplate from '../../templates/DefaultTemplate';
 
 import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
+import SubmitButton from '../../components/SubmitButton';
 
 import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
 
@@ -26,7 +27,6 @@ import {
   Checkbox,
   ImagesSection,
   ElementWrapper,
-  SubmitButton,
 } from './styles';
 import api from '../../services/api';
 

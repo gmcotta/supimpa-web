@@ -1,7 +1,9 @@
 import React from 'react';
 
 import Input from '../../../components/Input';
-import logo from '../../../assets/images/logo.svg';
+import SubmitButton from '../../../components/SubmitButton';
+
+import logo from '../../../assets/images/logo-vertical.svg';
 
 const AdminLogin: React.FC = () => {
   return (
@@ -13,6 +15,7 @@ const AdminLogin: React.FC = () => {
         <h1>Fazer login</h1>
         <Input id="email" name="email" label="E-mail" />
         <Input id="password" name="password" label="Senha" type="password" />
+        <SubmitButton type="button">Entrar</SubmitButton>
       </div>
     </div>
   );
