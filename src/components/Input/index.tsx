@@ -21,6 +21,7 @@ const Input: React.FC<InputProps> = ({
   errorMessage,
   disabled,
   optional,
+  type,
   onChange,
   onBlur,
 }) => {
@@ -36,7 +37,7 @@ const Input: React.FC<InputProps> = ({
       )}
       <input
         ref={inputRef}
-        type="text"
+        type={type}
         name={name}
         id={id}
         value={value}

@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
 import { Container } from './styles';
 
-type ButtonProps =
-  | HTMLButtonElement
-  | {
-      children?: string;
-    };
-
-const SubmitButton: React.FC<ButtonProps> = ({ children }) => {
-  return <Container>{children}</Container>;
+const SubmitButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  children,
+  type,
+}) => {
+  return <Container type={type}>{children}</Container>;
 };
 
 export default SubmitButton;

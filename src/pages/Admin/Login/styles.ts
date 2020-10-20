@@ -18,7 +18,7 @@ export const ImageSection = styled.section`
   );
 `;
 
-export const LoginSection = styled.section`
+export const LoginSection = styled.form`
   padding: 8rem;
   display: flex;
   flex-direction: column;
