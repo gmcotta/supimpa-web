@@ -5,6 +5,7 @@ export const Container = styled.div`
   max-width: 100vw;
   min-height: 100vh;
   padding: 8rem 0;
+  padding-left: 9.6rem;
 `;
 
 export const Card = styled.main`
