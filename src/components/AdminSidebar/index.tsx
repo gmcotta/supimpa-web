@@ -1,6 +1,5 @@
 import React from 'react';
-import { FiAlertCircle, FiMapPin } from 'react-icons/fi';
-import { CgLogOff } from 'react-icons/cg';
+import { FiAlertCircle, FiMapPin, FiPower } from 'react-icons/fi';
 
 import { useAuth } from '../../context/AuthContext';
 
@@ -24,7 +23,7 @@ const AdminSidebar: React.FC = () => {
         </CustomLink>
       </div>
       <button type="button" onClick={signOut}>
-        <CgLogOff size={24} />
+        <FiPower size={24} />
         <span>Log out</span>
       </button>
     </Container>
