@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import { withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
+
+import { useAuth } from '../../../context/AuthContext';
 
 import Input from '../../../components/Input';
 import SubmitButton from '../../../components/SubmitButton';
@@ -23,16 +25,38 @@ const formikEnhancer = withFormik({
     email: Yup.string().email('Email inválido').required('Campo obrigatório'),
     password: Yup.string().required('Campo obrigatório'),
   }),
-  handleSubmit: (values: FormValues) => {
-    console.log(values);
-  },
+  handleSubmit: () => ({}),
 });
 
 const Form = (props: FormikProps<FormValues>) => {
-  const { values, errors, touched, setFieldValue, handleSubmit } = props;
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    setErrors,
+    setTouched,
+    validateForm,
+  } = props;
+  const { signIn } = useAuth();
+
+  const handleSubmit = useCallback(
+    async (event: FormEvent, finalValues: FormValues) => {
+      event.preventDefault();
+      setTouched({ email: true, password: true });
+
+      const result = await validateForm(finalValues);
+      if (result.email || result.password) {
+        setErrors(result);
+      } else {
+        signIn(finalValues);
+      }
+    },
+    [setErrors, setTouched, signIn, validateForm],
+  );
 
   return (
-    <LoginSection onSubmit={handleSubmit}>
+    <LoginSection onSubmit={event => handleSubmit(event, values)}>
       <h1>Fazer login</h1>
       <Input
         id="email"
