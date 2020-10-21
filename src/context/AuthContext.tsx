@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 
 import api from '../services/api';
 
@@ -32,19 +26,17 @@ type AuthContextTypes = {
 const AuthContext = createContext({} as AuthContextTypes);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState({} as AuthState);
-  useEffect(() => {
-    console.log('iniciou context');
+  const [data, setData] = useState(() => {
     const rawUser = localStorage.getItem('@Supimpa:admin/user');
     const token = localStorage.getItem('@Supimpa:admin/token');
-
     if (rawUser && token) {
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
       const user = JSON.parse(rawUser);
-      setData({ user, token });
+      return { user, token };
     }
-  }, []);
+    return {} as AuthState;
+  });
 
   const signIn = useCallback(({ email, password }) => {
     console.log(email, password);

@@ -7,13 +7,15 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import { useAuth } from './context/AuthContext';
+
 import HomePage from './pages/HomePage';
 import MapPage from './pages/MapPage';
 import InstitutionDetails from './pages/InstitutionDetails';
 import CreateInstitution from './pages/CreateInstitution';
 import ThankYouPage from './pages/ThankYouPage';
 import AdminLogin from './pages/Admin/Login';
-import { useAuth } from './context/AuthContext';
+import Dashboard from './pages/Admin/Dashboard';
 
 type CustomRouteProps = RouteProps & {
   isPrivate?: boolean;
@@ -47,6 +49,12 @@ const Routes: React.FC = () => {
         <CustomRoute path="/create" exact component={CreateInstitution} />
         <CustomRoute path="/thank-you" exact component={ThankYouPage} />
         <CustomRoute path="/admin" exact component={AdminLogin} />
+        <CustomRoute
+          path="/admin/dashboard"
+          exact
+          isPrivate
+          component={Dashboard}
+        />
       </Switch>
     </BrowserRouter>
   );

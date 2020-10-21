@@ -1,6 +1,7 @@
-import React, { FormEvent, useCallback } from 'react';
+import React, { FormEvent, useCallback, useEffect } from 'react';
 import { withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../../context/AuthContext';
 
@@ -38,7 +39,14 @@ const Form = (props: FormikProps<FormValues>) => {
     setTouched,
     validateForm,
   } = props;
-  const { signIn } = useAuth();
+  const { user, signIn } = useAuth();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (user) {
+      history.push('/admin/dashboard');
+    }
+  }, [user, history]);
 
   const handleSubmit = useCallback(
     async (event: FormEvent, finalValues: FormValues) => {
@@ -50,9 +58,10 @@ const Form = (props: FormikProps<FormValues>) => {
         setErrors(result);
       } else {
         signIn(finalValues);
+        history.push('/admin/dashboard');
       }
     },
-    [setErrors, setTouched, signIn, validateForm],
+    [history, setErrors, setTouched, signIn, validateForm],
   );
 
   return (
