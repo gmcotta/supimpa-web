@@ -5,6 +5,8 @@ export const Container = styled.div`
 `;
 
 export const BoardTitle = styled.section`
+  width: 100%;
+  background-color: var(--color-background);
   display: flex;
   justify-content: space-between;
   align-items: center;

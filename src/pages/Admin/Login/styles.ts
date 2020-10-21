@@ -9,6 +9,7 @@ export const Container = styled.div`
 
 export const ImageSection = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: linear-gradient(
@@ -16,6 +17,14 @@ export const ImageSection = styled.section`
     var(--color-gradient-blue-dark) 0%,
     var(--color-gradient-blue-light) 100%
   );
+
+  & h1 {
+    color: var(--color-light);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 8rem;
+    margin-top: 3.2rem;
+  }
 `;
 
 export const LoginSection = styled.form`

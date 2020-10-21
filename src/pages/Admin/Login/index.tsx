@@ -109,6 +109,7 @@ const PageContent: React.FC = () => {
     <Container>
       <ImageSection>
         <img src={logo} alt="Supimpa logo" />
+        <h1>Admin</h1>
       </ImageSection>
       <LoginForm />
     </Container>

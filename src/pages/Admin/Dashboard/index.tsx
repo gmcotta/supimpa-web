@@ -6,6 +6,7 @@ import api from '../../../services/api';
 import AdminTemplate from '../../../templates/AdminTemplate';
 
 import { retirementHomeIcon, seniorCenterIcon } from '../../../utils/mapIcons';
+import Skeleton from './Skeleton';
 
 import {
   Container,
@@ -24,7 +25,7 @@ type InstitutionType = {
 };
 
 const Dashboard: React.FC = () => {
-  const [institutions, setInstitutions] = useState<InstitutionType[]>([]);
+  const [institutions, setInstitutions] = useState<InstitutionType[]>();
   const [institutionQuantityText, setInstitutionQuantityText] = useState<
     string
   >('');
@@ -36,15 +37,25 @@ const Dashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (institutions.length <= 0)
-      setInstitutionQuantityText('Nenhuma instituição encontrada');
-    if (institutions.length === 1)
-      setInstitutionQuantityText('1 instituição encontrada');
-    else
-      setInstitutionQuantityText(
-        `${institutions.length} instituições encontradas`,
-      );
+    if (institutions) {
+      if (institutions.length <= 0)
+        setInstitutionQuantityText('Nenhuma instituição encontrada');
+      if (institutions.length === 1)
+        setInstitutionQuantityText('1 instituição encontrada');
+      else
+        setInstitutionQuantityText(
+          `${institutions.length} instituições encontradas`,
+        );
+    }
   }, [institutions]);
+
+  if (!institutions) {
+    return (
+      <AdminTemplate>
+        <Skeleton />
+      </AdminTemplate>
+    );
+  }
 
   return (
     <AdminTemplate>

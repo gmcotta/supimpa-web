@@ -1,5 +1,27 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const tooltipCSS = css`
+  display: none;
+  opacity: 0;
+  height: 5.6rem;
+  width: 28rem;
+  position: absolute;
+  left: calc(4.8rem + 1.6rem);
+  font-size: 2rem;
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+  transition: all 0.2s;
+`;
+
+const tooltipHoverCSS = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-blue-dark);
+  color: var(--color-light);
+  opacity: 0.5;
+`;
 
 export const Container = styled.aside`
   z-index: 500;
@@ -52,26 +74,11 @@ export const Container = styled.aside`
     }
 
     & span {
-      display: none;
-      opacity: 0;
-      height: 5.6rem;
-      width: 28rem;
-      position: absolute;
-      left: calc(4.8rem + 1.6rem);
-      font-size: 2rem;
-      padding: 0.8rem;
-      border-radius: 0.8rem;
-      transition: all 0.2s;
+      ${tooltipCSS}
     }
 
     &:hover span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 1;
-      background-color: var(--color-blue-dark);
-      color: var(--color-light);
-      opacity: 0.5;
+      ${tooltipHoverCSS}
     }
   }
 `;
@@ -95,26 +102,11 @@ export const CustomLink = styled(Link)`
   }
 
   & span {
-    display: none;
-    opacity: 0;
-    height: 5.6rem;
-    width: 28rem;
-    position: absolute;
-    left: calc(4.8rem + 1.6rem);
-    font-size: 2rem;
-    padding: 0.8rem;
-    border-radius: 0.8rem;
-    transition: all 0.2s;
+    ${tooltipCSS}
   }
 
   &:hover span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    background-color: var(--color-blue-dark);
-    color: var(--color-light);
-    opacity: 0.5;
+    ${tooltipHoverCSS}
   }
 
   & svg {
