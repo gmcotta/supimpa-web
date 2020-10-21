@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.aside`
+  z-index: 500;
   position: fixed;
   left: 0;
   left: 0;
@@ -70,6 +71,7 @@ export const Container = styled.aside`
       opacity: 1;
       background-color: var(--color-blue-dark);
       color: var(--color-light);
+      opacity: 0.5;
     }
   }
 `;
@@ -112,6 +114,7 @@ export const CustomLink = styled(Link)`
     opacity: 1;
     background-color: var(--color-blue-dark);
     color: var(--color-light);
+    opacity: 0.5;
   }
 
   & svg {

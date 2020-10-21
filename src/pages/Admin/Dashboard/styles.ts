@@ -42,12 +42,12 @@ export const BoardTitle = styled.section`
     & span {
       font-size: 1.6rem;
       color: var(--color-text-blue);
-      margin-left: 1.6rem;
+      margin-right: 1.6rem;
     }
   }
 `;
 
-export const MapSection = styled.section`
+export const InstitutionsSection = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 3.2rem;

@@ -13,11 +13,11 @@ const AdminSidebar: React.FC = () => {
     <Container>
       <img src={logo} alt="Vó Supimpa" />
       <div>
-        <CustomLink to="/dashboard">
+        <CustomLink to="/admin/dashboard">
           <FiMapPin size={24} />
           <span>Instituições cadastradas</span>
         </CustomLink>
-        <CustomLink to="/dashboard">
+        <CustomLink to="/admin/dashboard">
           <FiAlertCircle size={24} />
           <span>Instituições pendentes</span>
         </CustomLink>
