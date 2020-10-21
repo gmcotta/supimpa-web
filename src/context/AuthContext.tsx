@@ -19,8 +19,9 @@ type AuthState = {
 };
 
 type AuthContextTypes = {
-  signIn(credentials: SignInCredentials): void;
   user: UserType;
+  signIn(credentials: SignInCredentials): void;
+  signOut(): void;
 };
 
 const AuthContext = createContext({} as AuthContextTypes);
@@ -39,18 +40,28 @@ const AuthProvider: React.FC = ({ children }) => {
   });
 
   const signIn = useCallback(({ email, password }) => {
-    console.log(email, password);
-    api.post('/admin/session', { email, password }).then(response => {
-      const { user, token } = response.data;
+    api
+      .post('/admin/session', { email, password })
+      .then(response => {
+        const { user, token } = response.data;
 
-      localStorage.setItem('@Supimpa:admin/user', JSON.stringify(user));
-      localStorage.setItem('@Supimpa:admin/token', token);
+        localStorage.setItem('@Supimpa:admin/user', JSON.stringify(user));
+        localStorage.setItem('@Supimpa:admin/token', token);
 
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-    });
+        api.defaults.headers.Authorization = `Bearer ${token}`;
+        setData({ user, token });
+      })
+      .catch(() => ({}));
   }, []);
+
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@Supimpa:admin/user');
+    localStorage.removeItem('@Supimpa:admin/token');
+    setData({} as AuthState);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

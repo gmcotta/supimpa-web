@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useEffect } from 'react';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
@@ -30,6 +30,7 @@ const formikEnhancer = withFormik({
 });
 
 const Form = (props: FormikProps<FormValues>) => {
+  const [signInError, setSignInError] = useState(false);
   const {
     values,
     errors,
@@ -38,6 +39,7 @@ const Form = (props: FormikProps<FormValues>) => {
     setErrors,
     setTouched,
     validateForm,
+    resetForm,
   } = props;
   const { user, signIn } = useAuth();
   const history = useHistory();
@@ -58,10 +60,18 @@ const Form = (props: FormikProps<FormValues>) => {
         setErrors(result);
       } else {
         signIn(finalValues);
-        history.push('/admin/dashboard');
+        const rawUser = localStorage.getItem('@Supimpa:admin/user');
+        const token = localStorage.getItem('@Supimpa:admin/token');
+        if (rawUser && token) {
+          setSignInError(false);
+          history.push('/admin/dashboard');
+        } else {
+          setSignInError(true);
+          resetForm();
+        }
       }
     },
-    [history, setErrors, setTouched, signIn, validateForm],
+    [history, setErrors, setTouched, signIn, validateForm, resetForm],
   );
 
   return (
@@ -86,6 +96,7 @@ const Form = (props: FormikProps<FormValues>) => {
         hasError={touched.password && !!errors.password}
         errorMessage={errors.password}
       />
+      {signInError && <span>E-mail ou senha inválida</span>}
       <SubmitButton type="submit">Entrar</SubmitButton>
     </LoginSection>
   );

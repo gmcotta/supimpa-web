@@ -34,4 +34,11 @@ export const LoginSection = styled.form`
   & div {
     margin-bottom: 2.4rem;
   }
+
+  > span {
+    font-size: 1.6rem;
+    color: var(--color-red-error);
+    font-weight: 500;
+    margin-bottom: 2.4rem;
+  }
 `;
