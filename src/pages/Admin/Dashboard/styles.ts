@@ -80,12 +80,12 @@ export const MapFooter = styled.div`
     display: flex;
     flex-direction: row;
 
-    & button + button {
+    & a + a {
       margin-left: 0.8rem;
     }
   }
 
-  & button {
+  & a {
     display: flex;
     align-items: center;
     justify-content: center;

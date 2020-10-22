@@ -16,6 +16,7 @@ import CreateInstitution from './pages/CreateInstitution';
 import ThankYouPage from './pages/ThankYouPage';
 import AdminLogin from './pages/Admin/Login';
 import Dashboard from './pages/Admin/Dashboard';
+import EditInstitution from './pages/Admin/EditInstitution';
 
 type CustomRouteProps = RouteProps & {
   isPrivate?: boolean;
@@ -54,6 +55,12 @@ const Routes: React.FC = () => {
           exact
           isPrivate
           component={Dashboard}
+        />
+        <CustomRoute
+          path="/admin/institutions/edit/:id"
+          exact
+          isPrivate
+          component={EditInstitution}
         />
       </Switch>
     </BrowserRouter>

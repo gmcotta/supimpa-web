@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FiFilter, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
+import { Link } from 'react-router-dom';
+
 import api from '../../../services/api';
 
 import AdminTemplate from '../../../templates/AdminTemplate';
@@ -102,12 +104,12 @@ const Dashboard: React.FC = () => {
               <MapFooter>
                 <span>{institution.name}</span>
                 <div>
-                  <button type="button">
+                  <Link to={`/admin/institutions/edit/${institution.id}`}>
                     <FiEdit3 size={16} />
-                  </button>
-                  <button type="button">
+                  </Link>
+                  <Link to={`/admin/institutions/edit/${institution.id}`}>
                     <FiTrash2 size={16} />
-                  </button>
+                  </Link>
                 </div>
               </MapFooter>
             </MapContainer>
