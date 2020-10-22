@@ -306,7 +306,7 @@ const CreateInstitution: React.FC = () => {
   }, [values, defineErrorMessage]);
 
   return (
-    <DefaultTemplate>
+    <DefaultTemplate backButtonUrl="/map">
       <Form onSubmit={handleSubmit}>
         <fieldset>
           <legend>Dados</legend>

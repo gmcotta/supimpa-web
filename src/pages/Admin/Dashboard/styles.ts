@@ -20,7 +20,7 @@ export const BoardTitle = styled.section`
 
   & div {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
 
     & button {
       display: flex;

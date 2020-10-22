@@ -65,7 +65,7 @@ const InstitutionDetails: React.FC = () => {
   }
 
   return (
-    <DefaultTemplate>
+    <DefaultTemplate backButtonUrl="/map">
       <ImagesSection>
         <img
           src={institution.images[selectedImageIndex].url}

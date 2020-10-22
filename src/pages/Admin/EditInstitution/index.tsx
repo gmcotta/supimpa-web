@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { FormikProps, withFormik } from 'formik';
@@ -63,6 +63,7 @@ const EditInstitution: React.FC = () => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const { id } = useParams<InstitutionRouteParams>();
+  const history = useHistory();
 
   // Read data from API
   useEffect(() => {
@@ -100,8 +101,30 @@ const EditInstitution: React.FC = () => {
   }
 
   const formikEnhancer = withFormik({
-    handleSubmit: (values: FormValues) => {
+    handleSubmit: async (values: FormValues) => {
       console.log(values);
+      const data = new FormData();
+      data.append('about', values.about);
+      data.append('instructions', values.instructions);
+      data.append('name', values.name);
+      data.append('phone', values.phone);
+      data.append('retirement_or_center', values.retirement_or_center);
+      data.append('opening_hours', values.opening_hours);
+      data.append('open_on_weekends', String(values.open_on_weekends));
+      data.append('latitude', String(values.latitude));
+      data.append('longitude', String(values.longitude));
+      values.images.forEach(image => {
+        data.append('images', image);
+      });
+
+      await api
+        .put(`/admin/institutions/edit/${id}`, data)
+        .then(() => {
+          history.push('/admin/dashboard');
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     mapPropsToValues: () => ({
       name: institution.name,
@@ -374,7 +397,7 @@ const EditInstitution: React.FC = () => {
   const EditForm = formikEnhancer(Form);
 
   return (
-    <DefaultTemplate>
+    <DefaultTemplate backButtonUrl="/admin/dashboard">
       <EditForm />
     </DefaultTemplate>
   );

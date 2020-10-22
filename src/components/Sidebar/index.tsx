@@ -6,11 +6,15 @@ import grandmaIcon from '../../assets/images/grandma.svg';
 
 import { Container } from './styles';
 
-const Sidebar: React.FC = () => {
+type SidebarProps = {
+  backButtonUrl: string;
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ backButtonUrl }) => {
   return (
     <Container>
       <img src={grandmaIcon} alt="Vó Supimpa" />
-      <Link to="/map">
+      <Link to={backButtonUrl}>
         <FiArrowLeft size={24} />
       </Link>
     </Container>
