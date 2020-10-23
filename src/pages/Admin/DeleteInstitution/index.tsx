@@ -20,6 +20,18 @@ const DeleteInstitution: React.FC = () => {
     history.push('/admin/dashboard');
   }, [history]);
 
+  const handleDeleteRequest = useCallback(() => {
+    api
+      .delete(`/admin/institutions/delete/${id}`)
+      .then(() => {
+        console.log('Deleted');
+        history.push('/admin/dashboard');
+      })
+      .catch(() => {
+        console.log('error');
+      });
+  }, [id, history]);
+
   useEffect(() => {
     api.get(`/institutions/${id}`).then(response => {
       const { name: institutionName } = response.data;
@@ -31,9 +43,11 @@ const DeleteInstitution: React.FC = () => {
     <Container>
       <ContentWrapper>
         <h1>Excluir!</h1>
-        <p>{`Você tem certeza que quer excluir a ${name}?`}</p>
+        <p>{`Você tem certeza que quer excluir ${name}?`}</p>
         <div>
-          <button type="button">Sim</button>
+          <button type="button" onClick={handleDeleteRequest}>
+            Sim
+          </button>
           <button type="button" onClick={handleCancelRequest}>
             Não
           </button>
