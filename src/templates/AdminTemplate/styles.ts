@@ -9,6 +9,7 @@ export const Container = styled.div`
 
 export const Board = styled.main`
   max-width: 100rem;
+  min-height: 100vh;
   margin: 0 auto;
   overflow: hidden;
 `;

@@ -1,7 +1,20 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
-export const Container = styled.button`
+type ButtonProps = {
+  buttonColorType?: string;
+};
+
+type colorTypesProps = {
+  [key: string]: string[];
+};
+
+const colorTypes: colorTypesProps = {
+  error: ['var(--color-text-pink)', '#ff669d'],
+  success: ['var(--color-whatsapp)', '#37c77f'],
+};
+
+export const Container = styled.button<ButtonProps>`
   display: flex;
   width: 100%;
   justify-content: center;
@@ -11,13 +24,21 @@ export const Container = styled.button`
   border: none;
   font-size: 2rem;
   text-decoration: none;
-  background-color: var(--color-whatsapp);
+  background-color: ${props =>
+    props.buttonColorType !== undefined &&
+    colorTypes[props.buttonColorType][0]};
   color: var(--color-light);
   transition: background-color 0.2s;
 
   &:hover {
-    /* background-color: ${darken(0.05, '#37c77f')}; */
-    background-color: ${darken(0.05, '#37c77f')};
+    background-color: ${props =>
+      props.buttonColorType !== undefined &&
+      darken(0.05, colorTypes[props.buttonColorType][1])};
     cursor: pointer;
+  }
+
+  & div {
+    display: flex;
+    align-items: center;
   }
 `;

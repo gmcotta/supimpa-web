@@ -7,6 +7,8 @@ import api from '../../../services/api';
 
 import AdminTemplate from '../../../templates/AdminTemplate';
 
+import grandmaChair from '../../../assets/images/grandma-chair.svg';
+
 import { retirementHomeIcon, seniorCenterIcon } from '../../../utils/mapIcons';
 import Skeleton from '../../../skeletons/AdminDashboard';
 
@@ -16,6 +18,7 @@ import {
   InstitutionsSection,
   MapContainer,
   MapFooter,
+  NoInstitutionSection,
 } from './styles';
 
 type InstitutionType = {
@@ -40,7 +43,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (institutions) {
-      if (institutions.length <= 0)
+      if (institutions.length === 0)
         setInstitutionQuantityText('Nenhuma instituição encontrada');
       if (institutions.length === 1)
         setInstitutionQuantityText('1 instituição encontrada');
@@ -59,12 +62,28 @@ const Dashboard: React.FC = () => {
     );
   }
 
+  if (institutions.length === 0) {
+    return (
+      <AdminTemplate>
+        <Container>
+          <BoardTitle>
+            <h1>Instituições pendentes</h1>
+          </BoardTitle>
+          <NoInstitutionSection>
+            <img src={grandmaChair} alt="" />
+            <span>Nenhum no momento</span>
+          </NoInstitutionSection>
+        </Container>
+      </AdminTemplate>
+    );
+  }
+
   return (
     <AdminTemplate>
       <Container>
         <BoardTitle>
-          <h1>Instituições cadastradas</h1>
-          {institutions.length && (
+          <h1>Instituições pendentes</h1>
+          {institutions.length >= 1 && (
             <div>
               <span>{institutionQuantityText}</span>
               <button type="button">

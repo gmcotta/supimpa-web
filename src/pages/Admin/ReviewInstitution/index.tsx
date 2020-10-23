@@ -4,7 +4,7 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { FormikProps, withFormik } from 'formik';
 import * as Yup from 'yup';
-import { FiPlus } from 'react-icons/fi';
+import { FiPlus, FiXCircle, FiCheck } from 'react-icons/fi';
 
 import api from '../../../services/api';
 
@@ -22,6 +22,7 @@ import {
   MapSection,
   RadioButtonSection,
   ImagesSection,
+  ButtonSection,
 } from './styles';
 
 type InstitutionProps = {
@@ -57,7 +58,7 @@ type InstitutionRouteParams = {
   id: string;
 };
 
-const EditInstitution: React.FC = () => {
+const ReviewInstitution: React.FC = () => {
   const [institution, setInstitution] = useState<InstitutionProps>();
   const [mapCenter, setMapCenter] = useState<[number, number]>([0, 0]);
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
@@ -113,6 +114,7 @@ const EditInstitution: React.FC = () => {
       data.append('open_on_weekends', String(values.open_on_weekends));
       data.append('latitude', String(values.latitude));
       data.append('longitude', String(values.longitude));
+      data.append('accepted', 'true');
       values.images.forEach(image => {
         data.append('images', image);
       });
@@ -217,6 +219,11 @@ const EditInstitution: React.FC = () => {
         previewImage => previewImage !== image,
       );
       setPreviewImages(filteredPreviewImages);
+    }, []);
+
+    const handleDeleteInstitution = useCallback(() => {
+      console.log('deletar');
+      history.push(`/admin/institutions/delete/${id}`);
     }, []);
 
     return (
@@ -389,9 +396,20 @@ const EditInstitution: React.FC = () => {
             }
           />
         </fieldset>
-        <SubmitButton type="submit" buttonColorType="success">
-          Confirmar
-        </SubmitButton>
+        <ButtonSection>
+          <SubmitButton
+            type="button"
+            buttonColorType="error"
+            onClick={handleDeleteInstitution}
+          >
+            <FiXCircle />
+            Recusar
+          </SubmitButton>
+          <SubmitButton type="submit" buttonColorType="success">
+            <FiCheck />
+            Aceitar
+          </SubmitButton>
+        </ButtonSection>
       </FormContainer>
     );
   };
@@ -405,4 +423,4 @@ const EditInstitution: React.FC = () => {
   );
 };
 
-export default EditInstitution;
+export default ReviewInstitution;

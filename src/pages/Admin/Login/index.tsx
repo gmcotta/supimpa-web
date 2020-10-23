@@ -97,7 +97,9 @@ const Form = (props: FormikProps<FormValues>) => {
         errorMessage={errors.password}
       />
       {signInError && <span>E-mail ou senha inválida</span>}
-      <SubmitButton type="submit">Entrar</SubmitButton>
+      <SubmitButton type="submit" buttonColorType="success">
+        Entrar
+      </SubmitButton>
     </LoginSection>
   );
 };

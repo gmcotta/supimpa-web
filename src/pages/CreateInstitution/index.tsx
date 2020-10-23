@@ -501,7 +501,9 @@ const CreateInstitution: React.FC = () => {
             </Checkbox>
           </ElementWrapper>
         </fieldset>
-        <SubmitButton type="submit">Confirmar</SubmitButton>
+        <SubmitButton type="submit" buttonColorType="success">
+          Confirmar
+        </SubmitButton>
       </Form>
     </DefaultTemplate>
   );

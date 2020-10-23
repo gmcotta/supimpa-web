@@ -2,11 +2,21 @@ import React, { ButtonHTMLAttributes } from 'react';
 
 import { Container } from './styles';
 
-const SubmitButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  buttonColorType?: string;
+};
+
+const SubmitButton: React.FC<ButtonProps> = ({
   children,
   type,
+  buttonColorType,
+  onClick,
 }) => {
-  return <Container type={type}>{children}</Container>;
+  return (
+    <Container type={type} buttonColorType={buttonColorType} onClick={onClick}>
+      <div>{children}</div>
+    </Container>
+  );
 };
 
 export default SubmitButton;

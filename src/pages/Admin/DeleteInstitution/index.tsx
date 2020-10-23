@@ -17,7 +17,7 @@ const DeleteInstitution: React.FC = () => {
   const history = useHistory();
 
   const handleCancelRequest = useCallback(() => {
-    history.push('/admin/dashboard');
+    history.goBack();
   }, [history]);
 
   const handleDeleteRequest = useCallback(() => {

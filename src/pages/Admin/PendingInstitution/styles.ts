@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   padding: 8rem 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const BoardTitle = styled.section`
@@ -103,5 +106,23 @@ export const MapFooter = styled.div`
       background-color: var(--color-gray);
       color: var(--color-blue-dark);
     }
+  }
+`;
+
+export const NoInstitutionSection = styled.section`
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & img {
+    height: 8rem;
+  }
+
+  & span {
+    font-size: 2rem;
+    color: var(--color-text-blue);
+    margin: 1.6rem;
   }
 `;
