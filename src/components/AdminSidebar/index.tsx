@@ -17,7 +17,7 @@ const AdminSidebar: React.FC = () => {
           <FiMapPin size={24} />
           <span>Instituições cadastradas</span>
         </CustomLink>
-        <CustomLink to="/admin/dashboard">
+        <CustomLink to="/admin/dashboard/pending">
           <FiAlertCircle size={24} />
           <span>Instituições pendentes</span>
         </CustomLink>

@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 
 const tooltipCSS = css`
   display: none;
-  opacity: 0;
   height: 5.6rem;
   width: 28rem;
   position: absolute;
@@ -20,7 +19,6 @@ const tooltipHoverCSS = css`
   justify-content: center;
   background-color: var(--color-blue-dark);
   color: var(--color-light);
-  opacity: 0.5;
 `;
 
 export const Container = styled.aside`

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FiFilter, FiEdit3, FiTrash2 } from 'react-icons/fi';
+import { FiFilter, FiArrowRight } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { Link } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
   >('');
 
   useEffect(() => {
-    api.get('/institutions?accepted=true').then(response => {
+    api.get('/institutions?accepted=false').then(response => {
       setInstitutions(response.data);
     });
   }, []);
@@ -104,11 +104,8 @@ const Dashboard: React.FC = () => {
               <MapFooter>
                 <span>{institution.name}</span>
                 <div>
-                  <Link to={`/admin/institutions/edit/${institution.id}`}>
-                    <FiEdit3 size={16} />
-                  </Link>
-                  <Link to={`/admin/institutions/delete/${institution.id}`}>
-                    <FiTrash2 size={16} />
+                  <Link to={`/admin/institutions/review/${institution.id}`}>
+                    <FiArrowRight size={16} />
                   </Link>
                 </div>
               </MapFooter>

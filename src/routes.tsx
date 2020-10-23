@@ -16,6 +16,7 @@ import CreateInstitution from './pages/CreateInstitution';
 import ThankYouPage from './pages/ThankYouPage';
 import AdminLogin from './pages/Admin/Login';
 import Dashboard from './pages/Admin/Dashboard';
+import PendingInstitution from './pages/Admin/PendingInstitution';
 import EditInstitution from './pages/Admin/EditInstitution';
 import DeleteInstitution from './pages/Admin/DeleteInstitution';
 
@@ -56,6 +57,12 @@ const Routes: React.FC = () => {
           exact
           isPrivate
           component={Dashboard}
+        />
+        <CustomRoute
+          path="/admin/dashboard/pending"
+          exact
+          isPrivate
+          component={PendingInstitution}
         />
         <CustomRoute
           path="/admin/institutions/edit/:id"

@@ -64,9 +64,11 @@ const MapPage: React.FC = () => {
           setCityLocation([lat, lng]);
         });
 
-      api.get('/institutions').then((response: BackendDataResponse) => {
-        setInstitutions(response.data);
-      });
+      api
+        .get('/institutions?accepted=true')
+        .then((response: BackendDataResponse) => {
+          setInstitutions(response.data);
+        });
     }
   }, [history]);
 
@@ -106,7 +108,8 @@ const MapPage: React.FC = () => {
           zoom={15}
           style={{ width: '100%', height: '100%' }}
           onmoveend={(event: LeafletEvent) =>
-            console.log(event.target.getBounds())}
+            console.log(event.target.getBounds())
+          }
         >
           <TileLayer
             url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
