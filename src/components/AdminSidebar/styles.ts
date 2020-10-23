@@ -67,6 +67,14 @@ export const Container = styled.aside`
     cursor: pointer;
     position: relative;
 
+    & svg {
+      color: var(--color-white);
+    }
+
+    &:hover svg {
+      color: var(--color-blue-dark);
+    }
+
     &:hover {
       background-color: var(--color-yellow);
     }
@@ -95,7 +103,8 @@ export const CustomLink = styled(Link)`
   align-items: center;
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &.active {
     background-color: var(--color-yellow);
   }
 
@@ -111,7 +120,8 @@ export const CustomLink = styled(Link)`
     color: var(--color-white);
   }
 
-  &:hover svg {
+  &:hover svg,
+  &.active svg {
     color: var(--color-blue-dark);
   }
 `;
