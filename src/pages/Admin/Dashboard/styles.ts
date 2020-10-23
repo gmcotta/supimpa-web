@@ -70,6 +70,7 @@ export const MapFooter = styled.div`
   align-items: center;
   background-color: var(--color-white);
   padding: 2.4rem;
+  height: 100%;
 
   > span {
     font-size: 2rem;

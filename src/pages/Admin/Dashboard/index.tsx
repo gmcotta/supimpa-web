@@ -107,7 +107,7 @@ const Dashboard: React.FC = () => {
                   <Link to={`/admin/institutions/edit/${institution.id}`}>
                     <FiEdit3 size={16} />
                   </Link>
-                  <Link to={`/admin/institutions/edit/${institution.id}`}>
+                  <Link to={`/admin/institutions/delete/${institution.id}`}>
                     <FiTrash2 size={16} />
                   </Link>
                 </div>
