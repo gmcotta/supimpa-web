@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   padding: 8rem 0;
+  overflow: hidden;
 `;
 
 export const BoardTitle = styled.section`
@@ -103,5 +104,39 @@ export const MapFooter = styled.div`
       background-color: var(--color-gray);
       color: var(--color-blue-dark);
     }
+  }
+`;
+
+export const FormContainer = styled.form`
+  width: 64rem;
+
+  & fieldset {
+    border: 0;
+    display: flex;
+    flex-direction: column;
+
+    > label {
+      margin-bottom: 2.4rem;
+    }
+  }
+
+  & legend {
+    width: 100%;
+    font-size: 3.2rem;
+    padding-bottom: 3.2rem;
+    margin-bottom: 3.2rem;
+    border-bottom: 1px solid var(--color-input-border);
+    color: var(--color-title-dark-blue);
+    font-weight: 500;
+  }
+
+  > span {
+    font-size: 1.6rem;
+    color: var(--color-red-error);
+    font-weight: 500;
+  }
+
+  > button {
+    margin-top: 2.4rem;
   }
 `;
