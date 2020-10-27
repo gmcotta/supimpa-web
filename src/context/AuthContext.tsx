@@ -34,9 +34,6 @@ const AuthProvider: React.FC = ({ children }) => {
     const rawUser = localStorage.getItem('@Supimpa:admin/user');
     const token = localStorage.getItem('@Supimpa:admin/token');
 
-    console.log(rawSessionUser, sessionToken);
-    console.log(rawUser, token);
-
     if (rawSessionUser && sessionToken) {
       api.defaults.headers.Authorization = `Bearer ${sessionToken}`;
 

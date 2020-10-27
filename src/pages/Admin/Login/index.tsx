@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../../context/AuthContext';
 
@@ -15,9 +15,9 @@ import Input from '../../../components/Input';
 import Checkbox from '../../../components/Checkbox';
 import SubmitButton from '../../../components/SubmitButton';
 
-import logo from '../../../assets/images/logo-vertical.svg';
+import LoginTemplate from '../../../templates/LoginTemplate';
 
-import { Container, ImageSection, LoginSection } from './styles';
+import { LoginSection } from './styles';
 
 type FormValues = {
   email: string;
@@ -119,7 +119,7 @@ const Form = (props: FormikProps<FormValues>) => {
             setFieldValue('rememberMe', event.target.checked)
           }
         />
-        <span>Esqueci minha senha</span>
+        <Link to="/admin/forgot-password">Esqueci minha senha</Link>
       </div>
       {signInError && <span>E-mail ou senha inválida</span>}
       <SubmitButton type="submit" buttonColorType="success">
@@ -133,13 +133,9 @@ const LoginForm = formikEnhancer(Form);
 
 const PageContent: React.FC = () => {
   return (
-    <Container>
-      <ImageSection>
-        <img src={logo} alt="Supimpa logo" />
-        <h1>Admin</h1>
-      </ImageSection>
+    <LoginTemplate>
       <LoginForm />
-    </Container>
+    </LoginTemplate>
   );
 };
 

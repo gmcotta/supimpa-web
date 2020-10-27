@@ -15,6 +15,7 @@ import InstitutionDetails from './pages/InstitutionDetails';
 import CreateInstitution from './pages/CreateInstitution';
 import ThankYouPage from './pages/ThankYouPage';
 import AdminLogin from './pages/Admin/Login';
+import AdminForgotPassword from './pages/Admin/ForgotPassword';
 import Dashboard from './pages/Admin/Dashboard';
 import PendingInstitution from './pages/Admin/PendingInstitution';
 import EditInstitution from './pages/Admin/EditInstitution';
@@ -53,6 +54,14 @@ const Routes: React.FC = () => {
         <CustomRoute path="/create" exact component={CreateInstitution} />
         <CustomRoute path="/thank-you" exact component={ThankYouPage} />
         <CustomRoute path="/admin" exact component={AdminLogin} />
+        <CustomRoute
+          path="/admin/forgot-password"
+          exact
+          component={AdminForgotPassword}
+        />
+
+        {/* Admin private pages */}
+
         <CustomRoute
           path="/admin/dashboard"
           exact

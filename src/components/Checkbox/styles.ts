@@ -26,7 +26,9 @@ export const Container = styled.label<CheckboxProps>`
       ${props =>
         props.checked ? 'var(--color-whatsapp)' : 'var(--color-blue-dark)'};
     background-color: ${props =>
-      props.checked ? 'var(--color-whatsapp)' : 'var(--color-light)'};
+      props.checked
+        ? 'var(--color-whatsapp)'
+        : 'var(--color-background-light)'};
 
     & svg {
       display: ${props => (props.checked ? 'block' : 'none')};
