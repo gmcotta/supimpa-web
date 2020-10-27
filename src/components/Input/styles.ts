@@ -7,6 +7,7 @@ type InputProps = {
 export const Container = styled.div<InputProps>`
   display: flex;
   flex-direction: column;
+  position: relative;
 
   & label {
     display: flex;
@@ -39,6 +40,7 @@ export const Container = styled.div<InputProps>`
     border-radius: 4px;
     margin-top: 0.8rem;
     padding-left: 1.6rem;
+    padding-right: 4.8rem;
 
     &::placeholder {
       color: var(--color-input-border);
@@ -48,6 +50,20 @@ export const Container = styled.div<InputProps>`
       background-color: var(--color-gray-light);
       border-color: var(--color-gray);
       cursor: not-allowed;
+    }
+  }
+
+  & button {
+    position: absolute;
+    right: 0;
+    top: 60%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-right: 1.6rem;
+
+    & svg {
+      color: var(--color-text-blue);
     }
   }
 

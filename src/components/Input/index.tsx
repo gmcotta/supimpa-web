@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-
+import React, { useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { Container } from './styles';
 
 type InputProps = React.HTMLProps<HTMLInputElement> & {
@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = ({
   onChange,
   onBlur,
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <Container hasError={hasError}>
@@ -36,8 +36,7 @@ const Input: React.FC<InputProps> = ({
         </label>
       )}
       <input
-        ref={inputRef}
-        type={type}
+        type={isVisible ? 'text' : type}
         name={name}
         id={id}
         value={value}
@@ -46,6 +45,11 @@ const Input: React.FC<InputProps> = ({
         onBlur={onBlur}
         disabled={disabled}
       />
+      {type === 'password' && (
+        <button type="button" onClick={() => setIsVisible(!isVisible)}>
+          {isVisible ? <FiEyeOff size={16} /> : <FiEye size={16} />}
+        </button>
+      )}
       {hasError && <span>{errorMessage}</span>}
     </Container>
   );
