@@ -29,14 +29,28 @@ const AuthContext = createContext({} as AuthContextTypes);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState(() => {
+    const rawSessionUser = sessionStorage.getItem('@Supimpa:admin/user');
+    const sessionToken = sessionStorage.getItem('@Supimpa:admin/token');
     const rawUser = localStorage.getItem('@Supimpa:admin/user');
     const token = localStorage.getItem('@Supimpa:admin/token');
+
+    console.log(rawSessionUser, sessionToken);
+    console.log(rawUser, token);
+
+    if (rawSessionUser && sessionToken) {
+      api.defaults.headers.Authorization = `Bearer ${sessionToken}`;
+
+      const user = JSON.parse(rawSessionUser);
+      return { user, token };
+    }
+
     if (rawUser && token) {
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
       const user = JSON.parse(rawUser);
       return { user, token };
     }
+
     return {} as AuthState;
   });
 
@@ -51,6 +65,8 @@ const AuthProvider: React.FC = ({ children }) => {
         const { user, token } = response.data;
         setData({ user, token });
         api.defaults.headers.Authorization = `Bearer ${token}`;
+        sessionStorage.setItem('@Supimpa:admin/user', JSON.stringify(user));
+        sessionStorage.setItem('@Supimpa:admin/token', token);
 
         if (rememberMe) {
           localStorage.setItem('@Supimpa:admin/user', JSON.stringify(user));
@@ -66,6 +82,8 @@ const AuthProvider: React.FC = ({ children }) => {
   );
 
   const signOut = useCallback(() => {
+    sessionStorage.removeItem('@Supimpa:admin/user');
+    sessionStorage.removeItem('@Supimpa:admin/token');
     localStorage.removeItem('@Supimpa:admin/user');
     localStorage.removeItem('@Supimpa:admin/token');
     setData({} as AuthState);
