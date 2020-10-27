@@ -1,4 +1,10 @@
-import React, { FormEvent, useCallback, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
@@ -82,7 +88,9 @@ const Form = (props: FormikProps<FormValues>) => {
         name="email"
         label="E-mail"
         value={values.email}
-        onChange={(event: any) => setFieldValue('email', event.target.value)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          setFieldValue('email', event.target.value)
+        }
         hasError={touched.email && !!errors.email}
         errorMessage={errors.email}
       />
@@ -92,7 +100,9 @@ const Form = (props: FormikProps<FormValues>) => {
         label="Senha"
         type="password"
         value={values.password}
-        onChange={(event: any) => setFieldValue('password', event.target.value)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          setFieldValue('password', event.target.value)
+        }
         hasError={touched.password && !!errors.password}
         errorMessage={errors.password}
       />

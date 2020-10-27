@@ -119,18 +119,23 @@ const CreateInstitution: React.FC = () => {
     }));
   }, []);
 
-  const handleChange = useCallback(event => {
-    const fieldName = event.target.getAttribute('name');
-    const fieldType = event.target.getAttribute('type');
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const { name, type, checked, value } = event.target;
 
-    if (fieldType === 'checkbox') {
-      const { checked } = event.target;
-      setValues(oldValues => ({ ...oldValues, [fieldName]: checked }));
+    if (type === 'checkbox') {
+      setValues(oldValues => ({ ...oldValues, [name]: checked }));
     } else {
-      const { value } = event.target;
-      setValues(oldValues => ({ ...oldValues, [fieldName]: value }));
+      setValues(oldValues => ({ ...oldValues, [name]: value }));
     }
   }, []);
+
+  const handleTextareaChange = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      const { value, name } = event.target;
+      setValues(oldValues => ({ ...oldValues, [name]: value }));
+    },
+    [],
+  );
 
   const handlePhoneChange = useCallback(event => {
     const fieldName = event.target.getAttribute('name');
@@ -404,7 +409,7 @@ const CreateInstitution: React.FC = () => {
               label="Sobre"
               name="about"
               value={values.about}
-              onChange={handleChange}
+              onChange={handleTextareaChange}
               onBlur={handleBlur}
               minLength={0}
               maxLength={300}
@@ -465,7 +470,7 @@ const CreateInstitution: React.FC = () => {
               label="Instruções"
               name="instructions"
               value={values.instructions}
-              onChange={handleChange}
+              onChange={handleTextareaChange}
               onBlur={handleBlur}
               hasError={touched.instructions && !!errors.instructions}
               errorMessage={errors.instructions}

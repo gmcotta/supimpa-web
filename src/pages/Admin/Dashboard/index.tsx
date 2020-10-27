@@ -247,6 +247,7 @@ const Dashboard: React.FC = () => {
             backgroundColor: 'var(--color-background-light)',
             padding: '8rem',
             zIndex: 10000,
+            maxHeight: '64rem',
           },
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.2)',
