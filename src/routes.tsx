@@ -16,6 +16,7 @@ import CreateInstitution from './pages/CreateInstitution';
 import ThankYouPage from './pages/ThankYouPage';
 import AdminLogin from './pages/Admin/Login';
 import AdminForgotPassword from './pages/Admin/ForgotPassword';
+import AdminResetPassword from './pages/Admin/ResetPassword';
 import Dashboard from './pages/Admin/Dashboard';
 import PendingInstitution from './pages/Admin/PendingInstitution';
 import EditInstitution from './pages/Admin/EditInstitution';
@@ -58,6 +59,11 @@ const Routes: React.FC = () => {
           path="/admin/forgot-password"
           exact
           component={AdminForgotPassword}
+        />
+        <CustomRoute
+          path="/admin/reset-password/:token"
+          exact
+          component={AdminResetPassword}
         />
 
         {/* Admin private pages */}
