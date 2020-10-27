@@ -40,8 +40,14 @@ export const LoginSection = styled.form`
     margin-bottom: 4rem;
   }
 
-  & div {
+  > div {
     margin-bottom: 2.4rem;
+
+    &:nth-child(4) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   > span {

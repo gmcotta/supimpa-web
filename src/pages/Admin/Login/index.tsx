@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 
 import Input from '../../../components/Input';
+import Checkbox from '../../../components/Checkbox';
 import SubmitButton from '../../../components/SubmitButton';
 
 import logo from '../../../assets/images/logo-vertical.svg';
@@ -21,16 +22,19 @@ import { Container, ImageSection, LoginSection } from './styles';
 type FormValues = {
   email: string;
   password: string;
+  rememberMe: boolean;
 };
 
 const formikEnhancer = withFormik({
   mapPropsToValues: () => ({
     email: '',
     password: '',
+    rememberMe: false,
   }),
   validationSchema: Yup.object().shape({
     email: Yup.string().email('Email inválido').required('Campo obrigatório'),
     password: Yup.string().required('Campo obrigatório'),
+    rememberMe: Yup.boolean(),
   }),
   handleSubmit: () => ({}),
 });
@@ -65,10 +69,9 @@ const Form = (props: FormikProps<FormValues>) => {
       if (result.email || result.password) {
         setErrors(result);
       } else {
-        signIn(finalValues);
-        const rawUser = localStorage.getItem('@Supimpa:admin/user');
-        const token = localStorage.getItem('@Supimpa:admin/token');
-        if (rawUser && token) {
+        const isSignInSuccessful = await signIn(finalValues);
+
+        if (isSignInSuccessful) {
           setSignInError(false);
           history.push('/admin/dashboard');
         } else {
@@ -106,6 +109,18 @@ const Form = (props: FormikProps<FormValues>) => {
         hasError={touched.password && !!errors.password}
         errorMessage={errors.password}
       />
+      <div>
+        <Checkbox
+          id="rememberMe"
+          name="rememberMe"
+          label="Lembrar-me"
+          checked={values.rememberMe}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setFieldValue('rememberMe', event.target.checked)
+          }
+        />
+        <span>Esqueci minha senha</span>
+      </div>
       {signInError && <span>E-mail ou senha inválida</span>}
       <SubmitButton type="submit" buttonColorType="success">
         Entrar

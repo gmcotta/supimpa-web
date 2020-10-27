@@ -5,6 +5,7 @@ import api from '../services/api';
 type SignInCredentials = {
   email: string;
   password: string;
+  rememberMe: boolean;
 };
 
 type UserType = {
@@ -20,7 +21,7 @@ type AuthState = {
 
 type AuthContextTypes = {
   user: UserType;
-  signIn(credentials: SignInCredentials): void;
+  signIn(credentials: SignInCredentials): Promise<boolean>;
   signOut(): void;
 };
 
@@ -39,20 +40,30 @@ const AuthProvider: React.FC = ({ children }) => {
     return {} as AuthState;
   });
 
-  const signIn = useCallback(({ email, password }) => {
-    api
-      .post('/admin/session', { email, password })
-      .then(response => {
+  const signIn = useCallback(
+    async ({
+      email,
+      password,
+      rememberMe,
+    }: SignInCredentials): Promise<boolean> => {
+      try {
+        const response = await api.post('/admin/session', { email, password });
         const { user, token } = response.data;
-
-        localStorage.setItem('@Supimpa:admin/user', JSON.stringify(user));
-        localStorage.setItem('@Supimpa:admin/token', token);
-
-        api.defaults.headers.Authorization = `Bearer ${token}`;
         setData({ user, token });
-      })
-      .catch(() => ({}));
-  }, []);
+        api.defaults.headers.Authorization = `Bearer ${token}`;
+
+        if (rememberMe) {
+          localStorage.setItem('@Supimpa:admin/user', JSON.stringify(user));
+          localStorage.setItem('@Supimpa:admin/token', token);
+        }
+
+        return true;
+      } catch (error) {
+        return false;
+      }
+    },
+    [],
+  );
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@Supimpa:admin/user');
