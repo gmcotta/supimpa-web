@@ -7,67 +7,76 @@ type InputProps = {
 export const Container = styled.div<InputProps>`
   display: flex;
   flex-direction: column;
-  position: relative;
 
   & label {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: ${props =>
-      props.hasError
-        ? 'var(--color-red-error)'
-        : 'var(--color-input-label-text)'};
-    font-size: 1.6rem;
-    font-weight: 500;
 
     & span {
-      color: inherit;
-      font-size: 1.2rem;
-      font-weight: inherit;
-    }
-  }
-
-  & input {
-    background-color: var(--color-background-light);
-    height: 4.8rem;
-    font-size: 2rem;
-    color: var(--color-text-blue);
-    border: 1px solid
-      ${props =>
+      color: ${props =>
         props.hasError
           ? 'var(--color-red-error)'
-          : 'var(--color-input-border)'};
-    border-radius: 4px;
+          : 'var(--color-input-label-text)'};
+      font-size: 1.6rem;
+      font-weight: 500;
+
+      &.optional {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  & div {
+    position: relative;
     margin-top: 0.8rem;
-    padding-left: 1.6rem;
-    padding-right: 4.8rem;
+    display: flex;
+    align-items: center;
 
-    &::placeholder {
-      color: var(--color-input-border);
-    }
-
-    &:disabled {
-      background-color: var(--color-gray-light);
-      border-color: var(--color-gray);
-      cursor: not-allowed;
-    }
-  }
-
-  & button {
-    position: absolute;
-    right: 0;
-    top: 60%;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    margin-right: 1.6rem;
-
-    & svg {
+    & input {
+      background-color: var(--color-background-light);
+      width: 100%;
+      height: 4.8rem;
+      font-size: 2rem;
       color: var(--color-text-blue);
+      border: 1px solid
+        ${props =>
+          props.hasError
+            ? 'var(--color-red-error)'
+            : 'var(--color-input-border)'};
+      border-radius: 4px;
+      padding-left: 1.6rem;
+      padding-right: 4.8rem;
+
+      &::placeholder {
+        color: var(--color-input-border);
+      }
+
+      &:disabled {
+        background-color: var(--color-gray-light);
+        border-color: var(--color-gray);
+        cursor: not-allowed;
+      }
+    }
+
+    & button {
+      position: absolute;
+      right: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      margin-right: 1.6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & svg {
+        color: var(--color-text-blue);
+      }
     }
   }
 
-  & span {
+  > span {
     font-size: 1.6rem;
     color: var(--color-red-error);
     font-weight: 500;

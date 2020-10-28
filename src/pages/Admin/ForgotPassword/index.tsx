@@ -1,13 +1,15 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { FormikProps, withFormik } from 'formik';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 import Input from '../../../components/Input';
 import SubmitButton from '../../../components/SubmitButton';
 
 import LoginTemplate from '../../../templates/LoginTemplate';
 
-import { LoginSection } from './styles';
+import { LoginSection, EmailSentSection } from './styles';
+import api from '../../../services/api';
 
 type FormValues = {
   email: string;
@@ -17,9 +19,7 @@ const formikEnhancer = withFormik({
   mapPropsToValues: () => ({
     email: '',
   }),
-  handleSubmit: () => {
-    console.log('oi');
-  },
+  handleSubmit: () => ({}),
   validationSchema: Yup.object().shape({
     email: Yup.string()
       .email('E-mail no formato inválido')
@@ -28,9 +28,56 @@ const formikEnhancer = withFormik({
 });
 
 const Form = (props: FormikProps<FormValues>) => {
-  const { values, touched, errors, setFieldValue, handleSubmit } = props;
+  const [isEmailSend, setIsEmailSend] = useState(true);
+  const history = useHistory();
+
+  const {
+    values,
+    touched,
+    errors,
+    setFieldValue,
+    setTouched,
+    setErrors,
+    validateForm,
+  } = props;
+
+  const handleSubmit = useCallback(
+    async (event: FormEvent, finalValues: FormValues) => {
+      event.preventDefault();
+      setTouched({ email: true });
+      const result = await validateForm(finalValues);
+      if (result.email) {
+        setErrors(result);
+      } else {
+        api.post('/admin/forgot-password', finalValues).then(() => {
+          setIsEmailSend(true);
+        });
+      }
+    },
+    [setErrors, setTouched, validateForm],
+  );
+
+  if (isEmailSend) {
+    return (
+      <EmailSentSection>
+        <h1>E-mail enviado</h1>
+        <p>
+          Por favor, verifique a caixa de entrada do endereço de e-mail que usou
+          para cadastro.
+        </p>
+        <SubmitButton
+          type="button"
+          onClick={() => history.push('/admin')}
+          buttonColorType="success"
+        >
+          Voltar para login
+        </SubmitButton>
+      </EmailSentSection>
+    );
+  }
+
   return (
-    <LoginSection onSubmit={handleSubmit}>
+    <LoginSection onSubmit={event => handleSubmit(event, values)}>
       <h1>Esqueci a senha</h1>
       <p>Sua redefinição de senha será enviada para o e-mail cadastrado.</p>
       <Input

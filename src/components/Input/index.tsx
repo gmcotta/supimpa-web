@@ -31,25 +31,27 @@ const Input: React.FC<InputProps> = ({
     <Container hasError={hasError}>
       {label && (
         <label htmlFor={id}>
-          {label}
-          {!!optional && <span>{optional}</span>}
+          <span>{label}</span>
+          {!!optional && <span className="optional">{optional}</span>}
         </label>
       )}
-      <input
-        type={isVisible ? 'text' : type}
-        name={name}
-        id={id}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        onBlur={onBlur}
-        disabled={disabled}
-      />
-      {type === 'password' && (
-        <button type="button" onClick={() => setIsVisible(!isVisible)}>
-          {isVisible ? <FiEyeOff size={16} /> : <FiEye size={16} />}
-        </button>
-      )}
+      <div>
+        <input
+          type={isVisible ? 'text' : type}
+          name={name}
+          id={id}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          onBlur={onBlur}
+          disabled={disabled}
+        />
+        {type === 'password' && (
+          <button type="button" onClick={() => setIsVisible(!isVisible)}>
+            {isVisible ? <FiEyeOff size={16} /> : <FiEye size={16} />}
+          </button>
+        )}
+      </div>
       {hasError && <span>{errorMessage}</span>}
     </Container>
   );
