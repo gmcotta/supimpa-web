@@ -82,7 +82,7 @@ const EditInstitution: React.FC = () => {
           .then(response => {
             const newFile = new File(
               [response],
-              `${Date.now()}-${institution.name}`,
+              `${Date.now()}-${institution.name.replace(/' '/g, '')}`,
             );
             setUploadedImages(oldFiles => [...oldFiles, newFile]);
           });
@@ -116,6 +116,7 @@ const EditInstitution: React.FC = () => {
       values.images.forEach(image => {
         data.append('images', image);
       });
+      data.append('accepted', String(true));
 
       await api
         .put(`/admin/institutions/edit/${id}`, data)
