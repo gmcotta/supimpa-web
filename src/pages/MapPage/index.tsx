@@ -112,29 +112,30 @@ const MapPage: React.FC = () => {
           <TileLayer
             url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
           />
-          {institutions?.map(institution => (
-            <Marker
-              key={institution.id}
-              position={[institution.latitude, institution.longitude]}
-              icon={
-                institution.retirement_or_center === 'retirement'
-                  ? retirementHomeIcon
-                  : seniorCenterIcon
-              }
-            >
-              <Popup
-                closeButton={false}
-                minWidth={300}
-                maxWidth={300}
-                className="map-popup"
+          {institutions &&
+            institutions.map(institution => (
+              <Marker
+                key={institution.id}
+                position={[institution.latitude, institution.longitude]}
+                icon={
+                  institution.retirement_or_center === 'retirement'
+                    ? retirementHomeIcon
+                    : seniorCenterIcon
+                }
               >
-                {institution.name}
-                <Link to={`/institutions/${institution.id}`}>
-                  <FiArrowRight />
-                </Link>
-              </Popup>
-            </Marker>
-          ))}
+                <Popup
+                  closeButton={false}
+                  minWidth={300}
+                  maxWidth={300}
+                  className="map-popup"
+                >
+                  {institution.name}
+                  <Link to={`/institutions/${institution.id}`}>
+                    <FiArrowRight />
+                  </Link>
+                </Popup>
+              </Marker>
+            ))}
         </Map>
       </MapContainer>
       <span
