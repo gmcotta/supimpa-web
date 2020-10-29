@@ -247,7 +247,6 @@ const CreateInstitution: React.FC = () => {
         values.images.forEach(image => {
           data.append('images', image);
         });
-        console.log(data);
 
         await api.post('/institutions', data);
         history.push('/thank-you');

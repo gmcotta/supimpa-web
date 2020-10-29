@@ -43,7 +43,7 @@ const MapPage: React.FC = () => {
   const [selectedCountryState, setSelectedCountryState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [cityLocation, setCityLocation] = useState<[number, number]>([0, 0]);
-  const [institutions, setInstitutions] = useState<InstitutionProps[]>();
+  const [institutions, setInstitutions] = useState<InstitutionProps[]>([]);
 
   useEffect(() => {
     const localStorageLocation = localStorage.getItem('@HOME/Location');
@@ -112,7 +112,7 @@ const MapPage: React.FC = () => {
           <TileLayer
             url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
           />
-          {institutions &&
+          {institutions !== [] &&
             institutions.map(institution => (
               <Marker
                 key={institution.id}
