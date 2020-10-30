@@ -248,7 +248,7 @@ const CreateInstitution: React.FC = () => {
           data.append('images', image);
         });
 
-        await api.post('/institutions', data);
+        await api.post('institutions', data);
         history.push('/thank-you');
       }
     },
