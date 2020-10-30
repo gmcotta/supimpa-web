@@ -12,6 +12,8 @@ import Checkbox from '../../../components/Checkbox';
 
 import AdminTemplate from '../../../templates/AdminTemplate';
 
+import grandmaChair from '../../../assets/images/grandma-chair.svg';
+
 import { retirementHomeIcon, seniorCenterIcon } from '../../../utils/mapIcons';
 import Skeleton from '../../../skeletons/AdminDashboard';
 
@@ -22,6 +24,7 @@ import {
   MapContainer,
   MapFooter,
   FormContainer,
+  NoInstitutionSection,
 } from './styles';
 import SubmitButton from '../../../components/SubmitButton';
 
@@ -112,6 +115,22 @@ const Dashboard: React.FC = () => {
     );
   }
 
+  if (institutions.length === 0) {
+    return (
+      <AdminTemplate>
+        <Container>
+          <BoardTitle>
+            <h1>Instituições cadastradas</h1>
+          </BoardTitle>
+          <NoInstitutionSection>
+            <img src={grandmaChair} alt="" />
+            <span>Nenhum no momento</span>
+          </NoInstitutionSection>
+        </Container>
+      </AdminTemplate>
+    );
+  }
+
   const formikEnhancer = withFormik({
     mapPropsToValues: () => ({
       center: modalValues.center,
@@ -121,7 +140,7 @@ const Dashboard: React.FC = () => {
       center: Yup.boolean(),
       retirement: Yup.boolean(),
     }),
-    handleSubmit: (values, formikBag) => {
+    handleSubmit: values => {
       if (values.center || values.retirement) {
         setModalError('');
         handleCloseModal();

@@ -26,6 +26,7 @@ import {
 } from './styles';
 
 type InstitutionProps = {
+  id: number;
   latitude: number;
   longitude: number;
   name: string;
@@ -83,7 +84,7 @@ const ReviewInstitution: React.FC = () => {
           .then(response => {
             const newFile = new File(
               [response],
-              `${Date.now()}-${institution.name}`,
+              `${Date.now()}-Institution${institution.id}`,
             );
             setUploadedImages(oldFiles => [...oldFiles, newFile]);
           });

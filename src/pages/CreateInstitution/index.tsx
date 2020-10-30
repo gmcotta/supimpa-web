@@ -260,7 +260,7 @@ const CreateInstitution: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const localStorageLocation = localStorage.getItem('@HOME/Location');
+    const localStorageLocation = localStorage.getItem('@Supimpa/location');
     if (localStorageLocation === null) {
       history.push('/');
     } else {
@@ -314,53 +314,6 @@ const CreateInstitution: React.FC = () => {
       <Form onSubmit={handleSubmit}>
         <fieldset>
           <legend>Dados</legend>
-          <MapSection>
-            <div style={{ width: '100%', height: 320 }}>
-              <Map
-                // center={[-23.4439484, -46.5258909]}
-                center={cityLocation}
-                zoom={15}
-                style={{ width: '100%', height: '100%' }}
-                onClick={handleMapClick}
-              >
-                <TileLayer
-                  url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-                />
-                <Marker
-                  icon={
-                    values.retirement_or_center === 'retirement'
-                      ? retirementHomeIcon
-                      : seniorCenterIcon
-                  }
-                  position={[values.latitude, values.longitude]}
-                />
-              </Map>
-            </div>
-            <span
-              className={
-                !!errors.latitude &&
-                touched.latitude &&
-                !!errors.latitude &&
-                touched.longitude
-                  ? 'error'
-                  : ''
-              }
-            >
-              Clique no mapa para adicionar a localização
-            </span>
-          </MapSection>
-          <ElementWrapper>
-            <Input
-              id="name"
-              label="Nome"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              hasError={touched.name && !!errors.name}
-              errorMessage={errors.name}
-            />
-          </ElementWrapper>
           <ElementWrapper>
             <RadioButtonSection>
               <span>Tipo de instituição</span>
@@ -402,6 +355,57 @@ const CreateInstitution: React.FC = () => {
               </div>
             </RadioButtonSection>
           </ElementWrapper>
+          <MapSection>
+            <span>Localização</span>
+            <div style={{ width: '100%', height: 320 }}>
+              <Map
+                // center={[-23.4439484, -46.5258909]}
+                center={cityLocation}
+                zoom={15}
+                style={{ width: '100%', height: '100%' }}
+                maxZoom={17}
+                minZoom={13}
+                onClick={handleMapClick}
+              >
+                <TileLayer
+                  url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                />
+                <Marker
+                  icon={
+                    values.retirement_or_center === 'retirement'
+                      ? retirementHomeIcon
+                      : seniorCenterIcon
+                  }
+                  position={[values.latitude, values.longitude]}
+                />
+              </Map>
+            </div>
+            <span
+              className={
+                !!errors.latitude &&
+                touched.latitude &&
+                !!errors.latitude &&
+                touched.longitude
+                  ? 'error'
+                  : ''
+              }
+            >
+              Clique no mapa para adicionar a localização
+            </span>
+          </MapSection>
+          <ElementWrapper>
+            <Input
+              id="name"
+              label="Nome"
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              hasError={touched.name && !!errors.name}
+              errorMessage={errors.name}
+            />
+          </ElementWrapper>
+
           <ElementWrapper>
             <Textarea
               id="about"

@@ -20,9 +20,9 @@ const ThankYouPage: React.FC = () => {
         <h1>Ebaaa!</h1>
         <img src={eldersPartying} alt="Imagem de obrigado" />
         <p>
-          A instituição foi cadastrada com sucesso!!!
+          O cadastro deu certo e foi enviado ao administrador para ser aprovado.
           <br />
-          Redirecionaremos você para o mapa.
+          Agora é só esperar :)
         </p>
       </div>
     </Container>

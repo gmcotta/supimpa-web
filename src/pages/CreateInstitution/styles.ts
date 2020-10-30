@@ -23,6 +23,7 @@ export const Form = styled.form`
     padding-bottom: 3.2rem;
     margin-bottom: 3.2rem;
     border-bottom: 1px solid var(--color-input-border);
+    color: var(--color-title-dark-blue);
   }
 `;
 
@@ -33,7 +34,14 @@ export const MapSection = styled.div`
   overflow: hidden;
   margin-bottom: 2.4rem;
 
-  & > span {
+  & span:nth-child(1) {
+    font-size: 1.6rem;
+    color: var(--color-input-label-text);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+  }
+
+  & span:nth-last-child(1) {
     height: 5.6rem;
     display: flex;
     justify-content: center;

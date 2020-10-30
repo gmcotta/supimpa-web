@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import axios from 'axios';
 
 import api from '../../services/api';
 import { retirementHomeIcon, seniorCenterIcon } from '../../utils/mapIcons';
@@ -13,17 +12,6 @@ import retirementHome from '../../assets/images/retirement-home.svg';
 import seniorCenter from '../../assets/images/senior-center.svg';
 
 import { Container, Aside, AsideText, MapLegend, MapContainer } from './styles';
-
-type OpenCageDataResponse = {
-  data: {
-    results: Array<{
-      geometry: {
-        lat: number;
-        lng: number;
-      };
-    }>;
-  };
-};
 
 type BackendDataResponse = {
   data: Array<InstitutionProps>;
@@ -46,22 +34,18 @@ const MapPage: React.FC = () => {
   const [institutions, setInstitutions] = useState<InstitutionProps[]>([]);
 
   useEffect(() => {
-    const localStorageLocation = localStorage.getItem('@HOME/Location');
-    if (localStorageLocation === null) {
+    const localStorageLocation = localStorage.getItem('@Supimpa/location');
+    const localStorageCoordinates = localStorage.getItem(
+      '@Supimpa/coordinates',
+    );
+    if (localStorageLocation === null || localStorageCoordinates === null) {
       history.push('/');
     } else {
       const { city, state } = JSON.parse(localStorageLocation);
+      const { latitude, longitude } = JSON.parse(localStorageCoordinates);
+      setCityLocation([latitude, longitude]);
       setSelectedCountryState(state);
       setSelectedCity(city);
-
-      axios
-        .get(
-          `https://api.opencagedata.com/geocode/v1/json?key=${process.env.REACT_APP_OPENCAGEDATA_TOKEN}&q=${city},%20${state}&pretty=1&limit=1`,
-        )
-        .then((response: OpenCageDataResponse) => {
-          const { lat, lng } = response.data.results[0].geometry;
-          setCityLocation([lat, lng]);
-        });
 
       api
         .get('/institutions?accepted=true')

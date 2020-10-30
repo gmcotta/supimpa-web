@@ -107,6 +107,7 @@ export const ContentHeader = styled.header`
     text-align: right;
     background: none;
     color: var(--color-light);
+    align-self: flex-end;
     transition: background-color 0.2s;
 
     &:hover {

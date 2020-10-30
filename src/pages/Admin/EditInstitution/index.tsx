@@ -25,6 +25,7 @@ import {
 } from './styles';
 
 type InstitutionProps = {
+  id: number;
   latitude: number;
   longitude: number;
   name: string;
@@ -82,8 +83,12 @@ const EditInstitution: React.FC = () => {
           .then(response => {
             const newFile = new File(
               [response],
-              `${Date.now()}-${institution.name.replace(/' '/g, '')}`,
+              `${Date.now()}-Institution${institution.id}`,
+              {
+                type: 'image/png',
+              },
             );
+            console.log(newFile);
             setUploadedImages(oldFiles => [...oldFiles, newFile]);
           });
         return image.url;

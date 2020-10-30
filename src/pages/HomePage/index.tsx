@@ -39,6 +39,17 @@ type IBGECityResponse = {
   nome: string;
 };
 
+type OpenCageDataResponse = {
+  data: {
+    results: Array<{
+      geometry: {
+        lat: number;
+        lng: number;
+      };
+    }>;
+  };
+};
+
 type AppStateProps = {
   id: number;
   label: string;
@@ -89,12 +100,21 @@ const HomePage: React.FC = () => {
         setModalError(false);
         setModalIsOpen(false);
         localStorage.setItem(
-          '@HOME/Location',
+          '@Supimpa/location',
           JSON.stringify({ state: selectedCountryState, city: selectedCity }),
         );
-        console.log(
-          JSON.stringify({ state: selectedCountryState, city: selectedCity }),
-        );
+
+        axios
+          .get(
+            `https://api.opencagedata.com/geocode/v1/json?key=${process.env.REACT_APP_OPENCAGEDATA_TOKEN}&q=${selectedCity},%20${selectedCountryState}&pretty=1&limit=1`,
+          )
+          .then((response: OpenCageDataResponse) => {
+            const { lat, lng } = response.data.results[0].geometry;
+            localStorage.setItem(
+              '@Supimpa/coordinates',
+              JSON.stringify({ latitude: lat, longitude: lng }),
+            );
+          });
       }
     },
     [selectedCountryState, selectedCity],
@@ -102,7 +122,7 @@ const HomePage: React.FC = () => {
 
   // Check if location is already set
   useEffect(() => {
-    const localStorageLocation = localStorage.getItem('@HOME/Location');
+    const localStorageLocation = localStorage.getItem('@Supimpa/location');
     if (localStorageLocation === null) {
       setModalIsOpen(true);
     } else {
@@ -142,7 +162,7 @@ const HomePage: React.FC = () => {
 
   // Get cities from IBGE API
   useEffect(() => {
-    const localStorageLocation = localStorage.getItem('@HOME/Location');
+    const localStorageLocation = localStorage.getItem('@Supimpa/location');
     if (localStorageLocation === null || modalIsOpen) {
       setCities([]);
       setSelectedCity('');
