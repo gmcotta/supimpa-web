@@ -28,7 +28,7 @@ const formikEnhancer = withFormik({
 });
 
 const Form = (props: FormikProps<FormValues>) => {
-  const [isEmailSend, setIsEmailSend] = useState(true);
+  const [isEmailSend, setIsEmailSend] = useState(false);
   const history = useHistory();
 
   const {
